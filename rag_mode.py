@@ -1,4 +1,6 @@
 import streamlit as st
+from openai import OpenAI
+
 
 def run_rag_mode():
     # Page title for RAG-mode
@@ -17,14 +19,23 @@ def run_rag_mode():
         st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
     st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
+    def llm_generate_response(prompt_input):
+        url = "http://104.171.203.227:8000/v1/chat/completions"
+
+
+        client = OpenAI(base_url = "http://104.171.203.227:8000/v1", api_key = "EMPTY")
+        response = client.chat.completions.create(model="llama-2-70b-meditron", messages=prompt_input)
+
+        return response.choices[0].message.content                  
+
     def generate_response(prompt_input):
-        string_dialogue = "You are a helpful assistant. You do not respond as 'User' or pretend to be 'User'. You only respond once as 'Assistant'."
-        for dict_message in st.session_state.messages:
-            if dict_message["role"] == "user":
-                string_dialogue += "User: " + dict_message["content"] + "\n\n"
-            else:
-                string_dialogue += "Assistant: " + dict_message["content"] + "\n\n"
-        output = "This is a great question, I think I can help you with that. Let me think about it for a moment."
+        system_prompt = "You are a helpful medical assistant."
+        if st.session_state.messages is None:
+            prompt = [{"role": "system", "content": system_prompt}, {"role": "user", "content": prompt_input}]
+        else:
+            prompt = st.session_state.messages
+        #prompt.append({"role": "user", "content": prompt_input})
+        output = llm_generate_response(prompt)
         return output
 
     # User-provided prompt

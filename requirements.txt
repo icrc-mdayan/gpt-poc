@@ -2,3 +2,4 @@ streamlit
 torch
 transformers
 openai
+json

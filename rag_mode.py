@@ -1,5 +1,6 @@
 import streamlit as st
 from openai import OpenAI
+from retriever.embedding import retrieve_documents
 
 
 def run_rag_mode():
@@ -35,6 +36,8 @@ def run_rag_mode():
         else:
             prompt = st.session_state.messages
         #prompt.append({"role": "user", "content": prompt_input})
+        documents = retrieve_documents(prompt_input)
+        print(documents)
         output = llm_generate_response(prompt)
         return output
 

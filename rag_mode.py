@@ -4,7 +4,7 @@ from openai import OpenAI
 
 def run_rag_mode():
     # Page title for RAG-mode
-    st.title('Conversation-mode')
+    st.title('RAG-mode')
 
     # Store LLM generated responses
     if "messages" not in st.session_state.keys():

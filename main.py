@@ -3,11 +3,11 @@ from rag_mode import run_rag_mode
 from conversation_mode import run_conversation_mode
 
 # App title
-st.set_page_config(page_title="🦙💬 random Chatbot")
+st.set_page_config(page_title="💊💬 Meditron-1-70B")
 
 # Replicate Credentials
 with st.sidebar:
-    st.title('🦙💬 random Chatbot')
+    st.title("💊💬 Meditron-1-70B")
 
     st.subheader('Models and parameters')
     selected_mode = st.selectbox('Choose a mode', ['RAG-mode', 'Conversation-mode'], key='selected_mode')

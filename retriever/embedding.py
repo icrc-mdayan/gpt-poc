@@ -32,7 +32,11 @@ def retrieve_documents(query, k=5):
 
     with open('retriever/icrc_embeddings.jsonl', 'r') as json_file:
         documents_embeddings = json.load(json_file)
-    print(len(documents_embeddings))
+    # documents_embeddings_array = np.array(documents_embeddings)
+    # reshaped_documents_embeddings = documents_embeddings_array.reshape(len(documents_embeddings), len(documents_embeddings[0][0]))
+    # with open('retriever/icrc_embeddings_reshaped.jsonl', 'w') as json_file:
+    #     json.dump(reshaped_documents_embeddings, json_file)
+        
     query_embedding = vo.embed(query, model="voyage-large-2-instruct", input_type="query").embeddings
 
     #reads all the documents in icrc_split.jsonl and stores them in data
@@ -43,10 +47,22 @@ def retrieve_documents(query, k=5):
                 file_path = os.path.join(root, filename)
                 with open(file_path, 'r') as json_file:
                     data.append(json.load(json_file))
-
+    # documents_embeddings = []
+    # #Je devrais pas faire doc par doc, mais faire par batch et après ajouter chaque embedded document dans documents_embeddings
+    # for i, doc in enumerate(data):
+    #     print(i)
+    #     embed = vo.embed(doc, model="voyage-large-2-instruct", input_type="document").embeddings
+    #     documents_embeddings.append(embed[0]) 
+    # with open('retriever/icrc_embeddings.jsonl', 'w') as json_file:
+    #     json.dump(documents_embeddings, json_file)
+    
     retrieved_embd, retrieved_embd_index = k_nearest_neighbors(query_embedding, documents_embeddings, k=2)
     retrieved_doc = [data[index] for index in retrieved_embd_index]
 
     return retrieved_doc
 
 
+if __name__ == "__main__":
+    query = "What is the best way to treat a broken arm?"
+    retrieved_docs = retrieve_documents(query)
+    print(retrieved_docs)

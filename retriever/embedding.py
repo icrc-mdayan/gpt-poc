@@ -41,7 +41,7 @@ def retrieve_documents(query, k=5):
 
     #reads all the documents in icrc_split.jsonl and stores them in data
     data = []
-    for root, dirs, files in os.walk('retriever/icrc_split.jsonl'):
+    for root, dirs, files in os.walk('retriever/icrc_split_2.jsonl'):
         for filename in files:
             if filename.endswith('.json'):
                 file_path = os.path.join(root, filename)
@@ -49,10 +49,11 @@ def retrieve_documents(query, k=5):
                     data.append(json.load(json_file))
     # documents_embeddings = []
     # #Je devrais pas faire doc par doc, mais faire par batch et après ajouter chaque embedded document dans documents_embeddings
-    # for i, doc in enumerate(data):
+    # for i in range(0, len(data), 100):
     #     print(i)
-    #     embed = vo.embed(doc, model="voyage-large-2-instruct", input_type="document").embeddings
-    #     documents_embeddings.append(embed[0]) 
+    #     embed = vo.embed(data[i:i+100], model="voyage-large-2-instruct", input_type="document").embeddings
+    #     for emb in embed:
+    #         documents_embeddings.append(emb) 
     # with open('retriever/icrc_embeddings.jsonl', 'w') as json_file:
     #     json.dump(documents_embeddings, json_file)
     

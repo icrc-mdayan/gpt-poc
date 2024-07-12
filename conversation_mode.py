@@ -19,7 +19,7 @@ def run_conversation_mode():
 
     def llm_generate_response(prompt_input):
         client = OpenAI(base_url="http://104.171.203.227:8000/v1", api_key="EMPTY")
-        response = client.chat.completions.create(model="llama-2-70b-meditron", messages=prompt_input)
+        response = client.chat.completions.create(model="llama-2-70b-meditron", messages=prompt_input, temperature=0.5, max_tokens=10)
         return response.choices[0].message.content
 
     def generate_response(prompt_input):
@@ -30,7 +30,7 @@ def run_conversation_mode():
         with open(system_prompt_path, 'r') as file:
             system_prompt_content = file.read().strip()
 
-        print(system_prompt_content)
+        # print(system_prompt_content)
 
         prompt = [{"role": "system", "content": system_prompt_content}] + st.session_state.conversation_messages + [{"role": "user", "content": prompt_input}]
         output = llm_generate_response(prompt)

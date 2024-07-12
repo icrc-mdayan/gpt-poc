@@ -30,21 +30,21 @@ def retrieve_documents(query, k=5):
         
     vo = voyageai.Client()
 
-    with open('icrc_embeddings.jsonl', 'r') as json_file:
+    with open('retriever/icrc_embeddings.jsonl', 'r') as json_file:
         documents_embeddings = json.load(json_file)
     print(len(documents_embeddings))
     query_embedding = vo.embed(query, model="voyage-large-2-instruct", input_type="query").embeddings
 
     #reads all the documents in icrc_split.jsonl and stores them in data
     data = []
-    for root, dirs, files in os.walk('icrc_split.jsonl'):
+    for root, dirs, files in os.walk('retriever/icrc_split.jsonl'):
         for filename in files:
             if filename.endswith('.json'):
                 file_path = os.path.join(root, filename)
                 with open(file_path, 'r') as json_file:
                     data.append(json.load(json_file))
 
-    retrieved_embd, retrieved_embd_index = k_nearest_neighbors(query_embedding, documents_embeddings, k=3)
+    retrieved_embd, retrieved_embd_index = k_nearest_neighbors(query_embedding, documents_embeddings, k=2)
     retrieved_doc = [data[index] for index in retrieved_embd_index]
 
     return retrieved_doc

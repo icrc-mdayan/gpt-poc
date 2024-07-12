@@ -19,7 +19,7 @@ def run_conversation_mode():
 
     def llm_generate_response(prompt_input):
         client = OpenAI(base_url="http://104.171.203.227:8000/v1", api_key="EMPTY")
-        response = client.chat.completions.create(model="llama-2-70b-meditron", messages=prompt_input, temperature=0.5, max_tokens=10)
+        response = client.chat.completions.create(model="llama-2-70b-meditron", messages=prompt_input)
         return response.choices[0].message.content
 
     def generate_response(prompt_input):

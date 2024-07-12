@@ -2,6 +2,5 @@ streamlit
 torch
 transformers
 openai
-json
 voyageai
-sklearn
+scikit-learn

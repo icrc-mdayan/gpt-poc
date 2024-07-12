@@ -1,11 +1,10 @@
 import streamlit as st
 from openai import OpenAI
+import os
 
 def run_conversation_mode():
-    # Page title for Conversation-mode
     st.title('Conversation-mode')
 
-    # Store LLM generated responses for Conversation-mode
     if "conversation_messages" not in st.session_state:
         st.session_state.conversation_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
 
@@ -24,8 +23,16 @@ def run_conversation_mode():
         return response.choices[0].message.content
 
     def generate_response(prompt_input):
-        system_prompt = "You are a helpful medical assistant."
-        prompt = st.session_state.conversation_messages + [{"role": "user", "content": prompt_input}]
+        # Define the path to the system prompt file
+        system_prompt_path = os.path.join('prompts', 'system_prompt_conversation.txt')
+        
+        # Read the system prompt from the file
+        with open(system_prompt_path, 'r') as file:
+            system_prompt_content = file.read().strip()
+
+        print(system_prompt_content)
+
+        prompt = [{"role": "system", "content": system_prompt_content}] + st.session_state.conversation_messages + [{"role": "user", "content": prompt_input}]
         output = llm_generate_response(prompt)
         return output
 

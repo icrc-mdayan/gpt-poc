@@ -25,7 +25,8 @@ def run_rag_mode():
         return response.choices[0].message.content
 
     def generate_response(prompt_input):
-        system_prompt = "You are a helpful medical assistant."
+        with open("prompts/system_prompt_conversation.txt", 'r') as file:
+            system_prompt = file.read().strip()
         #prompt.append({"role": "user", "content": prompt_input})
         documents = retrieve_documents(prompt_input)
         with st.sidebar:
@@ -35,8 +36,11 @@ def run_rag_mode():
                     st.write(doc)  
 
         # Now generate the response using the documents (if necessary) and prompt
-        question = [{"role": "system", "content": system_prompt}] + st.session_state.rag_messages
-        question[-1]["content"] = "<Document>:  ".join(documents) + " Question:  " + question[-1]["content"]
+        question = [{"role": "system", "content": system_prompt}]
+        question.extend(st.session_state.rag_messages)
+        formatted_documents = "\n".join([f"Document {idx+1}:\n{doc}" for idx, doc in enumerate(documents)])
+        question.append({"role": "user", "content": f"{formatted_documents}\n\nQuestion: {prompt_input}"})
+        print(question)
         output = llm_generate_response(question)
 
         return output

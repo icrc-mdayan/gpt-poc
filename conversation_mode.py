@@ -5,6 +5,10 @@ import os
 def run_conversation_mode():
     st.title('Conversation-mode')
 
+    temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=2.0, value=0.8, step=0.01)
+    top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
+    max_tokens = st.sidebar.slider('max_tokens', min_value=32, max_value=512, value=256, step=8)
+
     if "conversation_messages" not in st.session_state:
         st.session_state.conversation_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
 
@@ -19,7 +23,7 @@ def run_conversation_mode():
 
     def llm_generate_response(prompt_input):
         client = OpenAI(base_url="http://104.171.203.227:8000/v1", api_key="EMPTY")
-        response = client.chat.completions.create(model="llama-2-70b-meditron", messages=prompt_input)
+        response = client.chat.completions.create(model="llama-2-70b-meditron", messages=prompt_input, temperature=temperature, max_tokens=max_tokens, top_p=top_p)
         return response.choices[0].message.content
 
     def generate_response(prompt_input):

@@ -6,21 +6,16 @@ def run_rag_mode():
     # Page title for RAG-mode
     st.title('RAG-mode')
 
-    # Store LLM generated responses for RAG-mode
-    if "rag_messages" not in st.session_state:
-        st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
     # Store LLM generated responses
     if "rag_messages" not in st.session_state.keys():
         st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
 
     # Display or clear chat messages
     for message in st.session_state.rag_messages:
-    for message in st.session_state.rag_messages:
         with st.chat_message(message["role"]):
             st.write(message["content"])
 
     def clear_chat_history():
-        st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
         st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
     st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
@@ -49,12 +44,10 @@ def run_rag_mode():
     # User-provided prompt
     if prompt := st.chat_input("What bothers you today?"):
         st.session_state.rag_messages.append({"role": "user", "content": prompt})
-        st.session_state.rag_messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.write(prompt)
 
     # Generate a new response if last message is not from assistant
-    if st.session_state.rag_messages[-1]["role"] != "assistant":
     if st.session_state.rag_messages[-1]["role"] != "assistant":
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
@@ -63,5 +56,4 @@ def run_rag_mode():
                 full_response = response
                 placeholder.markdown(full_response)
         message = {"role": "assistant", "content": full_response}
-        st.session_state.rag_messages.append(message)
         st.session_state.rag_messages.append(message)

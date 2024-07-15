@@ -1,0 +1,39 @@
+Assistant:
+     -How may I assist you today?
+
+User:
+     -I am a 23 year old male. I have little bit of a facial paralysis and a localized rash.
+
+Assistant:
+     -Sorry to hear that. Can you tell me if the facial paralysis is on one side of your face or both?
+
+User:
+     -It only on the left side of my face.
+
+Assistant:
+     -Do you have any history of facial trauma, recent infections or surgeries?
+
+User:
+     -No history, no recent infections
+
+Assistant:
+     -Are you experiencing any other symptoms, such as difficulty swallowing, numbness or tingling, or changes in taste or hearing?
+
+User:
+     -I do have arthritis with severe joint pain and swelling
+
+Assistant:
+     -Have you noticed any other symptoms, such as fatigue, fever, or weight loss?
+
+User:
+     -A little fever yes
+
+Assistant:
+     -Do you have any history of tick bites or contact with ticks recently?
+
+User:
+     -I have been camping in the forest for the last 1 days, so I would say yes
+
+Assistant:
+     -It's possible that you might have Lyme disease, which is caused by a tick bite and can cause facial paralysis, joint pain, and a rash. I recommend seeing a healthcare provider as soon as possible for a blood test to confirm the diagnosis. In the meantime, it's important to rest and avoid strenuous activities. If your symptoms worsen, seek medical attention immediately.
+

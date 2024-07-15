@@ -1,0 +1,7 @@
+Assistant: How may I assist you today?
+User: I have pain in my left lung and shortness of breath. I am a 23 year old male.
+Assistant: I'm sorry to hear that. Can you tell me more about the pain in your left lung? Is it sharp or dull, and does it worsen when you take a deep breath?
+User: It worsen when I take a deep breath
+Assistant: On a scale from 1 to 10, how would you rate the intensity of the pain? And have you noticed any other symptoms, such as a cough, fever, or difficulty breathing?
+User: the intensity of the pain is 8. I do have difficulties when I fully breathe. No other symptoms otherwise.
+Assistant: Based on your symptoms, it's possible that you may have a pneumothorax, which is a collapsed lung. This is a serious condition that requires immediate medical attention. Please go to the nearest emergency room as soon as possible.

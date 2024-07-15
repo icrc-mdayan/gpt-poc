@@ -46,7 +46,7 @@ def run_rag_mode():
         return output
 
     # User-provided prompt
-    if prompt := st.chat_input("What bothers you today?"):
+    if prompt := st.chat_input("How can I help you?"):
         st.session_state.rag_messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.write(prompt)

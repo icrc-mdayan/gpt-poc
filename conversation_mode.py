@@ -15,6 +15,7 @@ def run_conversation_mode():
     # Display or clear chat messages
     for message in st.session_state.conversation_messages:
         with st.chat_message(message["role"]):
+            #st.markdown(f"<div class='chat-{message['role']}'>{message['content']}</div>", unsafe_allow_html=True)
             st.write(message["content"])
 
     def clear_chat_history():
@@ -41,7 +42,7 @@ def run_conversation_mode():
         return output
 
     # User-provided prompt
-    if prompt := st.chat_input("What bothers you today?"):
+    if prompt := st.chat_input("How can I help you ?"):
         st.session_state.conversation_messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.write(prompt)

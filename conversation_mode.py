@@ -2,15 +2,35 @@ import streamlit as st
 import os
 from openai import OpenAI
 
+def build_additional_information():
+    gender = st.session_state.get('gender') if st.session_state.get('gender') else 'Not specified'
+    age = str(st.session_state.get('age')) + " year old" if st.session_state.get('age') else 'Not specified'
+    location = st.session_state.get('location') if st.session_state.get('location') else 'Not specified'
+    travel_history = st.session_state.get('travel_history') if st.session_state.get('travel_history') else 'Not specified'
+    
+    additional_information = f"Gender: {gender}\nAge: {age}\nLocation: {location}\nRecent travel places: {travel_history}\n"
+    if st.session_state.get('infant', False):
+        additional_information += "Infant: Yes\n"
+    
+    return additional_information
+
 def run_conversation_mode():
-    st.title('Conversation-mode')
+    st.title('Conversation-mode 💬')
 
     # add some text under the title, to give more context and description about the chatbot use
     st.write("""
-             Welcome to the conversation_mode of the Meditron Medical Assistant! \n
              You are expected to give information about a patient's condition to the model, that will act as a medical assistant trying to understand the case and to provide diagnostic and treatment advice. \n
              Please be as detailed as possible, mentioning the symptoms, the patient's medical history, and any other relevant information such as the pain, additional medical tests and contextual factors.
              """)
+    
+    # Patient information inputs
+    st.subheader('Patient Information')
+    gender = st.radio('Gender', ('Male', 'Female', 'Other'), key='gender')
+    age = st.number_input('Age', min_value=0, max_value=120, key='age')
+    location = st.text_input('Location', key='location')
+    travel_history = st.text_input('Recent travel places', key='travel_history')
+    infant = st.checkbox('Infant', key='infant')
+
     # temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=2.0, value=0.8, step=0.01)
     # top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
     # max_tokens = st.sidebar.slider('max_tokens', min_value=32, max_value=512, value=256, step=8)
@@ -47,7 +67,13 @@ def run_conversation_mode():
         with open(system_prompt_path, 'r') as file:
             system_prompt_content = file.read().strip()
 
-        # print(system_prompt_content)
+        # additional_information = f"Gender: {st.session_state.get('gender', 'Not specified')}\nAge: {st.session_state.get('age', 'Not specified')} yearl old\nLocation: {st.session_state.get('location', 'Not specified')}\nRecent travel places: {st.session_state.get('travel_history', 'Not specified')}\n"
+        # if st.session_state.get('infant', False):
+        #     additional_information += "Infant: Yes\n"
+        
+        system_prompt_content = system_prompt_content.replace("ADDITIONAL_INFORMATION", build_additional_information())
+        
+        print(system_prompt_content)
 
         prompt = [{"role": "system", "content": system_prompt_content}] + st.session_state.conversation_messages + [{"role": "user", "content": prompt_input}]
         output = llm_generate_response(prompt)

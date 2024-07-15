@@ -1,6 +1,6 @@
 import streamlit as st
 from rag_mode import run_rag_mode
-from conversation_mode import run_conversation_mode
+from conversation_mode import run_conversation_mode, build_additional_information
 import os
 from datetime import datetime
 
@@ -8,19 +8,45 @@ from datetime import datetime
 st.set_page_config(page_title="🧑‍⚕️💬 Meditron-3-70B 🩺")
 
 # Function to save conversation to a txt file with Markdown formatting
-def save_conversation(conversation, mode):
+def save_conversation(conversation, mode, additional_patient_info=None):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"logs/{mode}_{timestamp}.md"
-    with open(filename, "w") as file:
+    filename_md = f"logs/md/{mode}_{timestamp}.md"
+    with open(filename_md, "w") as file:
         file.write(f"# Conversation Log ({mode})\n\n")
         file.write(f"**Timestamp**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+        if additional_patient_info:
+            file.write(f"**Patient Information**:\n")
+            file.write(f"{additional_patient_info}\n\n")
         for message in conversation:
             role = message["role"].capitalize()
             content = message["content"]
-            file.write(f"### {role}:\n\n")
-            file.write(f"> {content}\n\n")
-    st.sidebar.success(f"Conversation saved to {filename}")
+            if role == "Assistant":
+                file.write(f"### {role}:\n\n")
+                file.write(f'<div style="background-color: #B7E6F3; padding: 10px; border-radius: 5px;">\n')
+                file.write(f"{content}\n")
+                file.write(f"</div>\n\n")
+            elif role == "User":
+                file.write(f"### {role}:\n\n")
+                file.write(f'<div style="background-color: #F4DDA8; padding: 10px; border-radius: 5px;">\n')
+                file.write(f"{content}\n")
+                file.write(f"</div>\n\n")
+        file.close()
 
+    filename_txt = f"logs/txt/{mode}_{timestamp}.txt"
+    with open(filename_txt, "w") as file:
+        file.write(f"Conversation Log ({mode})\n\n")
+        file.write(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+        if additional_patient_info:
+            file.write(f"Patient Information:\n\n")
+            file.write(f"{additional_patient_info}\n\n")
+        for message in conversation:
+            role = message["role"].capitalize()
+            content = message["content"]
+            file.write(f"{role}:\n")
+            file.write(f" - {content}\n")
+        file.close()
+        
+    st.sidebar.success(f"Conversation saved to {filename_md} and {filename_txt}")
 
 # Ensure logs directory exists
 if not os.path.exists("logs"):
@@ -38,7 +64,7 @@ with st.sidebar:
         if selected_mode == 'RAG-mode' and "rag_messages" in st.session_state:
             save_conversation(st.session_state.rag_messages, "RAG-mode")
         elif selected_mode == 'Conversation-mode' and "conversation_messages" in st.session_state:
-            save_conversation(st.session_state.conversation_messages, "Conversation-mode")
+            save_conversation(st.session_state.conversation_messages, "Conversation-mode", build_additional_information())
 
 # Load the appropriate mode
 if selected_mode == 'RAG-mode':

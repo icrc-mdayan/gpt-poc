@@ -17,23 +17,36 @@ def build_additional_information():
 def run_conversation_mode():
     st.title('Conversation-mode 💬')
 
+    st.subheader('Instructions :')
+
     # add some text under the title, to give more context and description about the chatbot use
     st.write("""
-             You are expected to give information about a patient's condition to the model, that will act as a medical assistant trying to understand the case and to provide diagnostic and treatment advice. \n
-             Please be as detailed as possible, mentioning the symptoms, the patient's medical history, and any other relevant information such as the pain, additional medical tests and contextual factors.
-             """)
+            <div style="padding: 10px;">
+                Provide <b>detailed</b> information about the patient's condition, including: 
+                <ul>
+                    <li><span style="color:black; font-weight:bold; background-color:#ACE3A8 ; padding:2px; border-radius: 4px;"> SYMPTOMS </span></li>
+                    <li><span style="color:black; font-weight:bold; background-color:#ACE3A8 ; padding:2px; border-radius: 4px;"> MEDICAL HISTORY </span></li>
+                    <li><span style="color:black; font-weight:bold; background-color:#ACE3A8 ; padding:2px; border-radius: 4px;"> PAIN </span></li>
+                    <li><span style="color:black; font-weight:bold; background-color:#ACE3A8 ; padding:2px; border-radius: 4px;"> TEST RESULTS </span></li> 
+                    <li><span style="color:black; font-weight:bold; background-color:#ACE3A8 ; padding:2px; border-radius: 4px;"> RELEVANT CONTEXT </span></li> 
+                </ul>
+                This will help the model act as a medical assistant for diagnostic and treatment advice.
+            </div>
+            """, unsafe_allow_html=True)
     
     # Patient information inputs
-    st.subheader('Patient Information')
-    gender = st.selectbox('Gender', ('Male', 'Female', 'Other'), key='gender')
-    age = st.number_input('Age', min_value=0, max_value=120, key='age')
-    location = st.text_input('Location', key='location')
-    travel_history = st.text_input('Recent travel places', key='travel_history')
-    infant = st.checkbox('Infant', key='infant')
-
-    # temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=2.0, value=0.8, step=0.01)
-    # top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
-    # max_tokens = st.sidebar.slider('max_tokens', min_value=32, max_value=512, value=256, step=8)
+    st.subheader('Patient Information :')
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        gender = st.selectbox('Gender', ('Male', 'Female', 'Other'), key='gender')
+        location = st.text_input('Location/Region', key='location')
+        infant = st.checkbox('Infant', key='infant')
+    
+    with col2:
+        age = st.number_input('Age', min_value=0, max_value=120, key='age')
+        travel_history = st.text_input('Recent travel places', key='travel_history')
+        
 
     if "conversation_messages" not in st.session_state:
         st.session_state.conversation_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
@@ -41,7 +54,6 @@ def run_conversation_mode():
     # Display or clear chat messages
     for message in st.session_state.conversation_messages:
         with st.chat_message(message["role"]):
-            #st.markdown(f"<div class='chat-{message['role']}'>{message['content']}</div>", unsafe_allow_html=True)
             st.write(message["content"])
 
     def clear_chat_history():
@@ -56,7 +68,7 @@ def run_conversation_mode():
         top_p = 0.9
         max_tokens = 256
 
-        response = client.chat.completions.create(model="llama-3-70b-meditron", messages=prompt_input, temperature=temperature, max_tokens=max_tokens, top_p=top_p)
+        response = client.chat.completions.create(model="llama-2-70b-meditron", messages=prompt_input, temperature=temperature, max_tokens=max_tokens, top_p=top_p)
         return response.choices[0].message.content
 
     def generate_response(prompt_input):
@@ -66,10 +78,6 @@ def run_conversation_mode():
         # Read the system prompt from the file
         with open(system_prompt_path, 'r') as file:
             system_prompt_content = file.read().strip()
-
-        # additional_information = f"Gender: {st.session_state.get('gender', 'Not specified')}\nAge: {st.session_state.get('age', 'Not specified')} yearl old\nLocation: {st.session_state.get('location', 'Not specified')}\nRecent travel places: {st.session_state.get('travel_history', 'Not specified')}\n"
-        # if st.session_state.get('infant', False):
-        #     additional_information += "Infant: Yes\n"
         
         system_prompt_content = system_prompt_content.replace("ADDITIONAL_INFORMATION", build_additional_information())
         
@@ -80,7 +88,7 @@ def run_conversation_mode():
         return output
 
     # User-provided prompt
-    if prompt := st.chat_input("How can I help you ?"):
+    if prompt := st.chat_input("How can I assist you today ?"):
         st.session_state.conversation_messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.write(prompt)

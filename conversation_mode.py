@@ -25,7 +25,7 @@ def run_conversation_mode():
     
     # Patient information inputs
     st.subheader('Patient Information')
-    gender = st.radio('Gender', ('Male', 'Female', 'Other'), key='gender')
+    gender = st.selectbox('Gender', ('Male', 'Female', 'Other'), key='gender')
     age = st.number_input('Age', min_value=0, max_value=120, key='age')
     location = st.text_input('Location', key='location')
     travel_history = st.text_input('Recent travel places', key='travel_history')

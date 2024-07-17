@@ -56,8 +56,10 @@ if not os.path.exists("logs"):
 with st.sidebar:
     st.title("🧑‍⚕️💬 Meditron-3-70B 🩺")
 
-    st.subheader('Models and parameters')
-    selected_mode = st.selectbox('Choose a mode', ['RAG-mode', 'Conversation-mode'], key='selected_mode')
+    st.subheader('Mode Selection')
+    selected_mode = st.radio('Choose a mode', ['RAG-mode', 'Conversation-mode'], key='selected_mode')
+
+    st.subheader('Save and clear chat history')
 
     # Add a button to save the conversation
     if st.sidebar.button("Save Conversation"):

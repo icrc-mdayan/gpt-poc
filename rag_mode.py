@@ -37,7 +37,7 @@ def run_rag_mode():
 
         # Now generate the response using the documents (if necessary) and prompt
         question = [{"role": "system", "content": system_prompt}]
-        question.extend(st.session_state.rag_messages)
+        question.extend(st.session_state.rag_messages[:-1])
         formatted_documents = "\n".join([f"Document {idx+1}:\n{doc}" for idx, doc in enumerate(documents)])
         question.append({"role": "user", "content": f"{formatted_documents}\n\nQuestion: {prompt_input}"})
         print(question)

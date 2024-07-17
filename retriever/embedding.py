@@ -49,15 +49,7 @@ def retrieve_documents(query, k=5):
     #             file_path = os.path.join(root, filename)
     #             with open(file_path, 'r') as json_file:
     #                 data.append(json.load(json_file))
-    # documents_embeddings = []
-    # #Je devrais pas faire doc par doc, mais faire par batch et après ajouter chaque embedded document dans documents_embeddings
-    # for i in range(0, len(data), 100):
-    #     print(i)
-    #     embed = vo.embed(data[i:i+100], model="voyage-large-2-instruct", input_type="document").embeddings
-    #     for emb in embed:
-    #         documents_embeddings.append(emb) 
-    # with open('retriever/icrc_embeddings.jsonl', 'w') as json_file:
-    #     json.dump(documents_embeddings, json_file)
+    
     
     retrieved_embd, retrieved_embd_index = k_nearest_neighbors(query_embedding, documents_embeddings, k=2)
     retrieved_doc = [data[index] for index in retrieved_embd_index]
@@ -66,6 +58,18 @@ def retrieve_documents(query, k=5):
 
 
 if __name__ == "__main__":
-    query = "What is the best way to treat a broken arm?"
-    retrieved_docs = retrieve_documents(query)
-    print(retrieved_docs)
+    documents_embeddings = []
+    voyageai.api_key = "pa-dQ28MnYTDY5xF72HnbBVB5-w9FCs7E6yzzZBbAn0YPk"
+        
+    vo = voyageai.Client()
+    with open('retriever/icrc_split.jsonl', 'r') as json_file:
+        data = json.load(json_file)
+    #Je devrais pas faire doc par doc, mais faire par batch et après ajouter chaque embedded document dans documents_embeddings
+    print(len(data))
+    for i in range(0, len(data), 100):
+        print(i)
+        embed = vo.embed(data[i:i+100], model="voyage-large-2-instruct", input_type="document").embeddings
+        for emb in embed:
+            documents_embeddings.append(emb) 
+    with open('retriever/icrc_embeddings.jsonl', 'w') as json_file:
+        json.dump(documents_embeddings, json_file)

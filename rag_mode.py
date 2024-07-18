@@ -25,7 +25,7 @@ def run_rag_mode():
         return response.choices[0].message.content
 
     def generate_response(prompt_input):
-        with open("prompts/system_prompt_conversation.txt", 'r') as file:
+        with open("prompts/system_prompt_rag.txt", 'r') as file:
             system_prompt = file.read().strip()
         #prompt.append({"role": "user", "content": prompt_input})
         documents = retrieve_documents(prompt_input)

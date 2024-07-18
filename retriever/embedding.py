@@ -30,7 +30,8 @@ def retrieve_documents(query, k=5):
         
     vo = voyageai.Client()
 
-    with open('retriever/icrc_embeddings.jsonl', 'r') as json_file:
+    #with open('retriever/icrc_embeddings.jsonl', 'r') as json_file:
+    with open('retriever/books_embeddings.jsonl', 'r') as json_file:
         documents_embeddings = json.load(json_file)
     # documents_embeddings_array = np.array(documents_embeddings)
     # reshaped_documents_embeddings = documents_embeddings_array.reshape(len(documents_embeddings), len(documents_embeddings[0][0]))
@@ -40,8 +41,12 @@ def retrieve_documents(query, k=5):
     query_embedding = vo.embed(query, model="voyage-large-2-instruct", input_type="query").embeddings
 
     #reads all the documents in icrc_split.jsonl and stores them in data
-    with open('retriever/icrc_split.jsonl', 'r') as json_file:
-        data = json.load(json_file)
+    #with open('retriever/icrc_split.jsonl', 'r') as json_file:
+    #    data = json.load(json_file)
+    data = []
+    with open('retriever/books.json', 'r') as json_file:
+        for line in json_file:
+            data.append(json.loads(line)["text"])
     # data = []
     # for root, dirs, files in os.walk('retriever/icrc_split_2.jsonl'):
     #     for filename in files:
@@ -62,8 +67,10 @@ if __name__ == "__main__":
     voyageai.api_key = "pa-dQ28MnYTDY5xF72HnbBVB5-w9FCs7E6yzzZBbAn0YPk"
         
     vo = voyageai.Client()
-    with open('retriever/icrc_split.jsonl', 'r') as json_file:
-        data = json.load(json_file)
+    data = []
+    with open('retriever/books.json', 'r') as json_file:
+        for line in json_file:
+            data.append(json.loads(line)["text"])
     #Je devrais pas faire doc par doc, mais faire par batch et après ajouter chaque embedded document dans documents_embeddings
     print(len(data))
     for i in range(0, len(data), 100):
@@ -71,5 +78,5 @@ if __name__ == "__main__":
         embed = vo.embed(data[i:i+100], model="voyage-large-2-instruct", input_type="document").embeddings
         for emb in embed:
             documents_embeddings.append(emb) 
-    with open('retriever/icrc_embeddings.jsonl', 'w') as json_file:
+    with open('retriever/books_embeddings.jsonl', 'w') as json_file:
         json.dump(documents_embeddings, json_file)

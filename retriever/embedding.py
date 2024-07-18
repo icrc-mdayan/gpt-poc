@@ -14,10 +14,13 @@ def k_nearest_neighbors(query_embedding, documents_embeddings, k=5):
 
   # Calculate the similarity for each item in data
   cosine_sim = cosine_similarity(query_embedding, documents_embeddings)
-
+  
   # Sort the data by similarity in descending order and take the top k items
   sorted_indices = np.argsort(cosine_sim[0])[::-1]
-
+  sorted_args = np.sort(cosine_sim[0])[::-1]
+  #if args are smaller than 0.7 we return an empty list
+  if sorted_args[0] < 0.7:
+    return None, None
   # Take the top k related embeddings
   top_k_related_indices = sorted_indices[:k]
   top_k_related_embeddings = documents_embeddings[sorted_indices[:k]]
@@ -57,6 +60,8 @@ def retrieve_documents(query, k=5):
     
     
     retrieved_embd, retrieved_embd_index = k_nearest_neighbors(query_embedding, documents_embeddings, k=2)
+    if retrieved_embd_index is None:
+        return []
     retrieved_doc = [data[index] for index in retrieved_embd_index]
 
     return retrieved_doc

@@ -5,7 +5,7 @@ goal: |
   Your goal is to gather comprehensive and accurate information to provide a conclusive diagnostic and appropriate treatment for the patient's condition. 
 
   First step: you have to gather more informations about the patient and their symptoms to better understand the situation.
-    Follow these guidelines to ask questions to the patient if you are missing information. The patient description at the end should guide your questions. Don't ask an information you already have.
+    Follow these guidelines to ask questions to the patient if you are missing information. The patient description at the end should guide your questions. Ask question on the topic where the result is Unkown. Don't ask an information you already have.
     
     1. **Symptom Details**:
         - Ask about the temporalization, location, and specific characteristics of the symptoms.

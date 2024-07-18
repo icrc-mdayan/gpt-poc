@@ -24,11 +24,11 @@ def run_conversation_mode():
             <div style="padding: 10px;">
                 Provide <b>detailed</b> information about the patient's condition, including: 
                 <ul>
-                    <li><span style="color:black; font-weight:bold; background-color:#ACE3A8 ; padding:2px; border-radius: 4px;"> SYMPTOMS </span></li>
-                    <li><span style="color:black; font-weight:bold; background-color:#ACE3A8 ; padding:2px; border-radius: 4px;"> MEDICAL HISTORY </span></li>
-                    <li><span style="color:black; font-weight:bold; background-color:#ACE3A8 ; padding:2px; border-radius: 4px;"> PAIN </span></li>
-                    <li><span style="color:black; font-weight:bold; background-color:#ACE3A8 ; padding:2px; border-radius: 4px;"> TEST RESULTS </span></li> 
-                    <li><span style="color:black; font-weight:bold; background-color:#ACE3A8 ; padding:2px; border-radius: 4px;"> RELEVANT CONTEXT </span></li> 
+                    <li><span style="color:white; font-weight:bold; padding:2px;"> SYMPTOMS </span></li>
+                    <li><span style="color:white; font-weight:bold; padding:2px;"> MEDICAL HISTORY </span></li>
+                    <li><span style="color:white; font-weight:bold; padding:2px;"> PAIN </span></li>
+                    <li><span style="color:white; font-weight:bold; padding:2px;"> TEST RESULTS </span></li> 
+                    <li><span style="color:white; font-weight:bold; padding:2px;"> RELEVANT CONTEXT </span></li> 
                 </ul>
                 This will help the model act as a medical assistant for diagnostic and treatment advice.
             </div>
@@ -68,7 +68,7 @@ def run_conversation_mode():
         top_p = 0.9
         max_tokens = 256
 
-        response = client.chat.completions.create(model="llama-2-70b-meditron", messages=prompt_input, temperature=temperature, max_tokens=max_tokens, top_p=top_p)
+        response = client.chat.completions.create(model="llama-2-70b-meditron", messages=prompt_input)
         return response.choices[0].message.content
 
     def generate_response(prompt_input):

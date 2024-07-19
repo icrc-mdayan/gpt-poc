@@ -92,7 +92,7 @@ def run_conversation_mode():
         if len(st.session_state.conversation_messages) != 0:
             system_prompt_content = system_prompt_content + "Here is the conversation so far: \n"
             
-        prompt = [{"role": "system", "content": system_prompt_content}] + st.session_state.conversation_messages
+        prompt = [{"role": "system", "content": system_prompt_content}] + st.session_state.conversation_messages + [{"role": "user", "content": prompt_input}]
         
         # print("PROMPT ::: ", prompt)
         

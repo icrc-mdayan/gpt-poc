@@ -1,6 +1,7 @@
 import streamlit as st
 from rag_mode import run_rag_mode
-from conversation_mode import run_conversation_mode, build_additional_information
+from conversation_patient_mode import run_conversation_patient_mode, build_additional_information
+from conversation_general_mode import run_conversation_general_mode
 import os
 from datetime import datetime
 
@@ -57,19 +58,23 @@ with st.sidebar:
     st.title("🧑‍⚕️💬 Meditron-3-70B 🩺")
 
     st.subheader('Mode Selection')
-    selected_mode = st.radio('Choose a mode', ['RAG-mode', 'Conversation-mode'], key='selected_mode')
+    selected_mode = st.radio('Choose a mode', ['RAG-mode', 'Conversation-patient', 'Conversation-general'], key='selected_mode')
 
     st.subheader('Save and clear chat history')
 
     # Add a button to save the conversation
     if st.sidebar.button("Save Conversation"):
         if selected_mode == 'RAG-mode' and "rag_messages" in st.session_state:
-            save_conversation(st.session_state.rag_messages, "RAG-mode")
-        elif selected_mode == 'Conversation-mode' and "conversation_messages" in st.session_state:
-            save_conversation(st.session_state.conversation_messages, "Conversation-mode", build_additional_information())
+            save_conversation(st.session_state.rag_messages, selected_mode)
+        elif selected_mode == 'Conversation-patient' and "conversation_messages" in st.session_state:
+            save_conversation(st.session_state.conversation_messages, selected_mode, build_additional_information())
+        elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
+            save_conversation(st.session_state.conversation_general_messages, selected_mode)
 
 # Load the appropriate mode
 if selected_mode == 'RAG-mode':
     run_rag_mode()
+elif selected_mode == 'Conversation-patient':
+    run_conversation_patient_mode()
 else:
-    run_conversation_mode()
+    run_conversation_general_mode()

@@ -28,7 +28,7 @@ def run_conversation_patient_mode():
     # add some text under the title, to give more context and description about the chatbot use
     st.write("""
             <div style="padding: 10px;">
-                Provide <b>detailed</b> information about the patient's condition, including: 
+                This mode is designed to help you to come up with a diagnostic and treatment when discussing a specific patient case.\n You may choose to provide <b>detailed</b> information about the patient's condition, including:
                 <ul>
                     <li><span font-weight:bold; padding:2px;">Symptoms</span></li>
                     <li><span font-weight:bold; padding:2px;">Pain</span></li>
@@ -36,9 +36,10 @@ def run_conversation_patient_mode():
                     <li><span font-weight:bold; padding:2px;">Test results</span></li> 
                     <li><span font-weight:bold; padding:2px;">Relevant context</span></li> 
                 </ul>
-                This will help the model act as a medical assistant for diagnostic and treatment advice.
+                This optional information can help the model act as a medical assistant for diagnostic and treatment advice.
             </div>
             """, unsafe_allow_html=True)
+
     
     # Patient information inputs
     st.subheader('Patient Information :')

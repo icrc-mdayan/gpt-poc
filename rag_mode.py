@@ -50,7 +50,8 @@ def run_rag_mode():
     st.write(
         """
         <div style="padding: 10px;">
-            This model uses Retrieval-Augmented Generation (RAG) to generate responses based on the ICRC knowledge base. It is able to read documents and generate reponses based on the information it has read.
+            This model uses Retrieval-Augmented Generation (RAG) to generate responses based on the ICRC and MSF knowledge base. It is able to read documents and generate reponses based on the information it has read.
+            For now knowledge base only consits of 4 books: msf guidelines, icrc_war surgery guidelines, icrc nursing guidelines and MSF new born care guidelines. Be free to suggest more ressources that are useful to you.
         </div>
         """
     , unsafe_allow_html=True)
@@ -146,11 +147,7 @@ def run_rag_mode():
                     
                     # Highlight the closest sentence
                     highlighted_doc = content.replace(closest_sentence, f'<span class="highlight">{closest_sentence}</span>')
-
-
-                    # Highlight keywords (e.g., the word "important") in the document content
-                    #highlighted_doc = re.sub(r'\b(malaria)\b', r'<span class="highlight">\1</span>', content, flags=re.IGNORECASE)
-
+                    
                     # Using simple expander title and styled title inside the expander
                     with st.expander(f"{title}"):
                         st.markdown(f'<div class="document-content">{highlighted_doc}</div>', unsafe_allow_html=True)

@@ -63,8 +63,7 @@ def retrieve_documents(query, k=5):
     if retrieved_embd_index is None:
         return []
     retrieved_doc = [data[index] for index in retrieved_embd_index]
-
-    return retrieved_doc
+    return retrieved_doc, query_embedding
 
 
 if __name__ == "__main__":

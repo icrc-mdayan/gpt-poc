@@ -4,7 +4,15 @@ from retriever.embedding import retrieve_documents
 
 def run_rag_mode():
     # Page title for RAG-mode
-    st.title('RAG-mode')
+    st.title('ICRC-knowledge based chatbot')
+    st.subheader('RAG based chatbot :')
+    st.write(
+        """
+        <div style="padding: 10px;">
+            This model uses Retrieval-Augmented Generation (RAG) to generate responses based on the ICRC knowledge base. It is able to read documents and generate reponses based on the information it has read.
+        </div>
+        """
+    , unsafe_allow_html=True)
 
     # Store LLM generated responses
     if "rag_messages" not in st.session_state.keys():

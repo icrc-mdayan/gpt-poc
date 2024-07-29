@@ -61,7 +61,7 @@ def retrieve_documents(query, k=5):
     
     retrieved_embd, retrieved_embd_index = k_nearest_neighbors(query_embedding, documents_embeddings, k=2)
     if retrieved_embd_index is None:
-        return []
+        return [], query_embedding
     retrieved_doc = [data[index] for index in retrieved_embd_index]
     return retrieved_doc, query_embedding
 

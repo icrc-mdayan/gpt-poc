@@ -73,28 +73,7 @@ def run_rag_mode():
         response = client.chat.completions.create(model="llama-3-70b-meditron", messages=prompt_input)
         return response.choices[0].message.content
 
-    # def generate_response(prompt_input):
-    #     with open("prompts/system_prompt_rag.txt", 'r') as file:
-    #         system_prompt = file.read().strip()
-    #     #prompt.append({"role": "user", "content": prompt_input})
-    #     documents = retrieve_documents(prompt_input)
-    #     if documents != []:
-    #         with st.sidebar:
-    #             st.write("## Retrieved Documents")
-    #             for idx, doc in enumerate(documents, start=1):
-    #                 with st.expander(f"Document {idx}"):
-    #                     st.write(doc)  
-
-    #         # Now generate the response using the documents (if necessary) and prompt
-    #         question = [{"role": "system", "content": system_prompt}]
-    #         question.extend(st.session_state.rag_messages[:-1])
-    #         formatted_documents = "\n".join([f"Document {idx+1}:\n{doc}" for idx, doc in enumerate(documents)])
-    #         question.append({"role": "user", "content": f"{formatted_documents}\n\nQuestion: {prompt_input}"})
-    #         output = llm_generate_response(question)
-    #     else:
-    #         output = llm_generate_response(st.session_state.rag_messages)
-
-    #     return output
+   
     def generate_response(prompt_input):
         with open("prompts/system_prompt_rag.txt", 'r') as file:
             system_prompt = file.read().strip()

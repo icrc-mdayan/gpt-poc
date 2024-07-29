@@ -58,13 +58,13 @@ with st.sidebar:
     st.title("🧑‍⚕️💬 Meditron-3-70B 🩺")
 
     st.subheader('Mode Selection')
-    selected_mode = st.radio('Choose a mode', ['RAG-mode', 'Conversation-patient', 'Conversation-general'], key='selected_mode')
+    selected_mode = st.radio('Choose a mode', ['ICRC-knowledge based chatbot', 'Conversation-patient', 'Conversation-general'], key='selected_mode')
 
     st.subheader('Save and clear chat history')
 
     # Add a button to save the conversation
     if st.sidebar.button("Save Conversation"):
-        if selected_mode == 'RAG-mode' and "rag_messages" in st.session_state:
+        if selected_mode == 'ICRC-knowledge based chatbot' and "rag_messages" in st.session_state:
             save_conversation(st.session_state.rag_messages, selected_mode)
         elif selected_mode == 'Conversation-patient' and "conversation_messages" in st.session_state:
             save_conversation(st.session_state.conversation_messages, selected_mode, build_additional_information())
@@ -72,7 +72,7 @@ with st.sidebar:
             save_conversation(st.session_state.conversation_general_messages, selected_mode)
 
 # Load the appropriate mode
-if selected_mode == 'RAG-mode':
+if selected_mode == 'ICRC-knowledge based chatbot':
     run_rag_mode()
 elif selected_mode == 'Conversation-patient':
     run_conversation_patient_mode()

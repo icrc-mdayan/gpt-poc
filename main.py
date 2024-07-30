@@ -4,7 +4,17 @@ from conversation_patient_mode import run_conversation_patient_mode, build_addit
 from conversation_general_mode import run_conversation_general_mode
 import os
 from datetime import datetime
+import nltk
+from nltk.data import find
 
+def download_nltk_resources():
+    try:
+        # Check if the 'punkt' resource is already available
+        find('tokenizers/punkt')
+    except LookupError:
+        # If not found, download the resource
+        nltk.download('punkt')
+download_nltk_resources()
 # App title
 st.set_page_config(page_title="🧑‍⚕️💬 Meditron-3-70B 🩺")
 

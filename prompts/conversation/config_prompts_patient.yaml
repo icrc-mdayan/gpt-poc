@@ -47,10 +47,9 @@ safety: |
 
 formatting_rules: |
   Here are the formatting rules you must follow.
-    First step: Ask one question at a time. Ensure that each time, your question is clear and empathetic.
-      - Ask questions one by one to imitate a human conversation.
+    First step: ASK ONE QUESTION. Ensure that each time, your question is clear and empathetic.
+      - Ask questions ONE BY ONE to imitate a smooth human conversation.
       - Each question should logically follow the previous response to maintain a conversational flow.
     Second step: Provide the diagnosis and treatment answers clearly. If you list a symptom, diagnosis, or treatment, please explain what it is.
       - Use simple, layman-friendly language.
       - Break down complex information into easy-to-understand sections.
-      

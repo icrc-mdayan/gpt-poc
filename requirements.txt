@@ -4,3 +4,4 @@ transformers
 openai
 voyageai
 scikit-learn
+nltk

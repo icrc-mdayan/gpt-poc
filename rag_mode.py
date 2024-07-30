@@ -10,7 +10,6 @@ from scipy.spatial.distance import cosine
 import nltk
 import os
 
-
 data_dir = os.path.join(os.getcwd(), 'data')
 nltk.data.path.append(data_dir)
 

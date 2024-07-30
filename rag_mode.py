@@ -55,9 +55,23 @@ def run_rag_mode():
         """
         <div style="padding: 10px;">
             This model uses Retrieval-Augmented Generation (RAG) to generate responses based on the ICRC and MSF knowledge base. It is able to read documents and generate reponses based on the information it has read.
-            For now knowledge base only consits of 4 books: msf guidelines, icrc_war surgery guidelines, icrc nursing guidelines and MSF new born care guidelines. Be free to suggest more ressources that are useful to you.
         </div>
         """, unsafe_allow_html=True)
+
+    st.write(
+        """
+        <div style="padding: 5px;">
+            For now, the knowledge base only consists of 4 books: 
+            <b>MSF Guidelines</b>, 
+            <b>ICRC War Surgery Guidelines</b>, 
+            <b>ICRC Nursing Guidelines</b>, and 
+            <b>MSF Newborn Care Guidelines</b>. 
+            Feel free to suggest more resources that are useful to you.
+        </div>
+        """, unsafe_allow_html=True)
+
+                
+
 
     # Store LLM generated responses
     if "rag_messages" not in st.session_state.keys():

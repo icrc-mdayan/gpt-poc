@@ -7,6 +7,9 @@ import numpy as np
 import voyageai
 from nltk.tokenize import sent_tokenize
 from scipy.spatial.distance import cosine
+import nltk
+# Download the punkt tokenizer model
+nltk.download('punkt')
 
 
 def _split_sentences(text):

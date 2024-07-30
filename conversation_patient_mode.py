@@ -70,17 +70,10 @@ def run_conversation_patient_mode():
 
     def clear_chat_history():
         st.session_state.conversation_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-        for elem in st.session_state:
-            print(elem, st.session_state[elem])
-
-        # reset the patient information using st.session_state['key'] = default value
         st.session_state['location'] = ''
         st.session_state['age'] = None
         st.session_state['Sex'] = 'Male'
         st.session_state['travel_history'] = ''
-
-        for elem in st.session_state:
-            print(elem, st.session_state[elem])
 
     st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 

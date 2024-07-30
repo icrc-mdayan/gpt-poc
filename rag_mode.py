@@ -8,9 +8,10 @@ import voyageai
 from nltk.tokenize import sent_tokenize
 from scipy.spatial.distance import cosine
 import nltk
-# Download the punkt tokenizer model
-nltk.download('punkt')
+import os
 
+data_dir = os.path.join(os.getcwd(), 'data')
+nltk.data.path.append(data_dir)
 
 def _split_sentences(text):
     # Use regular expressions to split the text into sentences based on punctuation followed by whitespace.
@@ -23,18 +24,17 @@ def convert_to_vector(texts):
         voyageai.api_key = "pa-dQ28MnYTDY5xF72HnbBVB5-w9FCs7E6yzzZBbAn0YPk"
         vo = voyageai.Client()
         embeddings = []
-        #Je devrais pas faire doc par doc, mais faire par batch et après ajouter chaque embedded document dans documents_embeddings
+        # Je devrais pas faire doc par doc, mais faire par batch et après ajouter chaque embedded document dans documents_embeddings
         for i in range(0, len(texts), 100):
             print(i)
             embed = vo.embed(texts[i:i+100], model="voyage-large-2-instruct", input_type="document").embeddings
             for emb in embed:
                 embeddings.append(emb) 
-        #embeddings = np.array([item.embedding for item in response.data])
+        # embeddings = np.array([item.embedding for item in response.data])
         return embeddings
     except Exception as e:
         print("An error occurred:", e)
         return np.array([])  # Return an empty array in case of an error
-
 
 def find_closest_sentence(query_embedding, sentences, sentence_embeddings):
     min_distance = float('inf')
@@ -56,8 +56,7 @@ def run_rag_mode():
             This model uses Retrieval-Augmented Generation (RAG) to generate responses based on the ICRC and MSF knowledge base. It is able to read documents and generate reponses based on the information it has read.
             For now knowledge base only consits of 4 books: msf guidelines, icrc_war surgery guidelines, icrc nursing guidelines and MSF new born care guidelines. Be free to suggest more ressources that are useful to you.
         </div>
-        """
-    , unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
     # Store LLM generated responses
     if "rag_messages" not in st.session_state.keys():
@@ -77,7 +76,6 @@ def run_rag_mode():
         response = client.chat.completions.create(model="llama-3-70b-meditron", messages=prompt_input)
         return response.choices[0].message.content
 
-   
     def generate_response(prompt_input):
         with open("prompts/system_prompt_rag.txt", 'r') as file:
             system_prompt = file.read().strip()

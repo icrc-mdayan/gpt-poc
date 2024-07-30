@@ -4,6 +4,11 @@ from conversation_patient_mode import run_conversation_patient_mode, build_addit
 from conversation_general_mode import run_conversation_general_mode
 import os
 from datetime import datetime
+import nltk
+
+# Set the NLTK data path to the specified directory
+data_dir = os.path.join(os.getcwd(), 'data')
+nltk.data.path.append(data_dir)
 
 # App title
 st.set_page_config(page_title="🧑‍⚕️💬 Meditron-3-70B 🩺")

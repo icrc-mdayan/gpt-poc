@@ -4,6 +4,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import voyageai
 import numpy as np
+import re
 
 def k_nearest_neighbors(query_embedding, documents_embeddings, k=5):
   query_embedding = np.array(query_embedding) # convert to numpy array
@@ -34,7 +35,7 @@ def retrieve_documents(query, k=5):
     vo = voyageai.Client()
 
     #with open('retriever/icrc_embeddings.jsonl', 'r') as json_file:
-    with open('retriever/books_embeddings.jsonl', 'r') as json_file:
+    with open('retriever/books_embeddings_2.jsonl', 'r') as json_file:
         documents_embeddings = json.load(json_file)
     # documents_embeddings_array = np.array(documents_embeddings)
     # reshaped_documents_embeddings = documents_embeddings_array.reshape(len(documents_embeddings), len(documents_embeddings[0][0]))
@@ -47,7 +48,7 @@ def retrieve_documents(query, k=5):
     #with open('retriever/icrc_split.jsonl', 'r') as json_file:
     #    data = json.load(json_file)
     data = []
-    with open('retriever/books.json', 'r') as json_file:
+    with open('retriever/books_2.jsonl', 'r') as json_file:
         for line in json_file:
             data.append(json.loads(line)["text"])
     # data = []
@@ -72,15 +73,25 @@ if __name__ == "__main__":
         
     vo = voyageai.Client()
     data = []
-    with open('retriever/books.json', 'r') as json_file:
+    with open('retriever/books_2.jsonl', 'r') as json_file:
         for line in json_file:
             data.append(json.loads(line)["text"])
-    #Je devrais pas faire doc par doc, mais faire par batch et après ajouter chaque embedded document dans documents_embeddings
+    new_data = []
+    #new data is data,but with a maximum of 20000 characaters per document
+    for document in data:
+        if len(document) > 20000:
+            new_data.append(document[:20000])
+        else:
+            new_data.append(document)
+
     print(len(data))
-    for i in range(0, len(data), 100):
+    for i in range(0, len(new_data), 128):
         print(i)
-        embed = vo.embed(data[i:i+100], model="voyage-large-2-instruct", input_type="document").embeddings
+        embed = vo.embed(new_data[i:i+128], model="voyage-large-2-instruct", input_type="document").embeddings
         for emb in embed:
             documents_embeddings.append(emb) 
-    with open('retriever/books_embeddings.jsonl', 'w') as json_file:
+            with open('retriever/tmp.jsonl', 'a') as json_file:
+                json.dump(emb, json_file)
+    with open('retriever/books_embeddings_2.jsonl', 'w') as json_file:
         json.dump(documents_embeddings, json_file)
+            

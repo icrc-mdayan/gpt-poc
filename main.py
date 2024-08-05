@@ -1,5 +1,5 @@
 import streamlit as st
-from documents.rag_mode import run_rag_mode
+from rag_mode import run_rag_mode
 from conversation_patient_mode import run_conversation_patient_mode, build_additional_information
 from conversation_general_mode import run_conversation_general_mode
 import os

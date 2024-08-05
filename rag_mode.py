@@ -26,7 +26,6 @@ def convert_to_vector(texts):
         embeddings = []
         # Je devrais pas faire doc par doc, mais faire par batch et après ajouter chaque embedded document dans documents_embeddings
         for i in range(0, len(texts), 100):
-            print(i)
             embed = vo.embed(texts[i:i+100], model="voyage-large-2-instruct", input_type="document").embeddings
             for emb in embed:
                 embeddings.append(emb) 
@@ -49,7 +48,6 @@ def find_closest_sentence(query_embedding, sentences, sentence_embeddings):
 def run_rag_mode():
     # Page title for RAG-mode
     st.title('ICRC-knowledge based chatbot')
-    st.subheader('RAG based chatbot :')
     st.write(
         """
         <div style="padding: 10px;">
@@ -109,10 +107,6 @@ def run_rag_mode():
                         font-weight: bold;
                         margin-bottom: 10px;
                     }
-                    .document-content {
-                        color: #FFF;
-                        font-size: 16px;
-                    }
                     .highlight {
                         font-weight: bold;
                     }
@@ -148,11 +142,15 @@ def run_rag_mode():
                 st.write("## Retrieved Documents")
                 for idx, doc in enumerate(documents, start=1):
                     # Extract the title from the document
+                    source_match = re.search(r"^\*\*(.*?)\*\*", doc)
+                    source = source_match.group(1) if source_match else "Unknown Source"
+
                     title_match = re.search(r"^#{1,2}\s*(.*)", doc, re.MULTILINE)
                     title = title_match.group(1) if title_match else f"Document {idx}"
                     
                     # Remove the title from the document content
-                    content = re.sub(r"^#{1,2}\s*.*\n", '', doc, flags=re.MULTILINE).strip()
+                    content = re.sub(r"^\*\*.*?\*\*\s*|^#{1,2}\s*.*\n", '', doc, flags=re.MULTILINE).strip()
+                    
                     
                     sentences = _split_sentences(content)
                     sentence_embeddings = convert_to_vector(sentences)
@@ -164,7 +162,7 @@ def run_rag_mode():
                     highlighted_doc = content.replace(closest_sentence, f'<span class="highlight">{closest_sentence}</span>')
                     
                     # Using simple expander title and styled title inside the expander
-                    with st.expander(f"{title}"):
+                    with st.expander(f"from: {source}, paragraph: {title}"):
                         st.markdown(f'<div class="document-content">{highlighted_doc}</div>', unsafe_allow_html=True)
 
             # Now generate the response using the documents (if necessary) and prompt
@@ -187,10 +185,11 @@ def run_rag_mode():
     # Generate a new response if last message is not from assistant
     if st.session_state.rag_messages[-1]["role"] != "assistant":
         with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
-                response = generate_response(prompt)
-                placeholder = st.empty()
-                full_response = response
-                placeholder.markdown(full_response)
-        message = {"role": "assistant", "content": full_response}
-        st.session_state.rag_messages.append(message)
+            st.spinner("Thinking...")
+            response = generate_response(prompt)
+            placeholder = st.empty()
+            placeholder.markdown(response)
+            
+            # Update the session state with the assistant's response
+            message = {"role": "assistant", "content": response}
+            st.session_state.rag_messages.append(message)

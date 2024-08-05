@@ -6,7 +6,7 @@ import voyageai
 import numpy as np
 import re
 
-def k_nearest_neighbors(query_embedding, documents_embeddings, k=5):
+def k_nearest_neighbors(query_embedding, documents_embeddings, data, k=5, max_length = 5000):
   query_embedding = np.array(query_embedding) # convert to numpy array
   documents_embeddings = np.array(documents_embeddings) # convert to numpy array
 
@@ -21,13 +21,21 @@ def k_nearest_neighbors(query_embedding, documents_embeddings, k=5):
   sorted_args = np.sort(cosine_sim[0])[::-1]
   #if args are smaller than 0.7 we return an empty list
   if sorted_args[0] < 0.7:
-    return None, None
+    return []
   # Take the top k related embeddings
   top_k_related_indices = sorted_indices[:k]
-  top_k_related_embeddings = documents_embeddings[sorted_indices[:k]]
-  top_k_related_embeddings = [list(row[:]) for row in top_k_related_embeddings] # convert to list
+#   top_k_related_embeddings = documents_embeddings[sorted_indices[:k]]
+#   top_k_related_embeddings = [list(row[:]) for row in top_k_related_embeddings] # convert to list
+  retrieved_doc = []
+  total_length = 0
+  for index in top_k_related_indices:
+      retrieved_doc.append(data[index])
+      total_length += len(data[index])
+      if total_length > max_length:
+          break
+  
 
-  return top_k_related_embeddings, top_k_related_indices
+  return retrieved_doc #top_k_related_embeddings, top_k_related_indices
 
 def retrieve_documents(query, k=5):
     voyageai.api_key = "pa-dQ28MnYTDY5xF72HnbBVB5-w9FCs7E6yzzZBbAn0YPk"
@@ -60,10 +68,8 @@ def retrieve_documents(query, k=5):
     #                 data.append(json.load(json_file))
     
     
-    retrieved_embd, retrieved_embd_index = k_nearest_neighbors(query_embedding, documents_embeddings, k=2)
-    if retrieved_embd_index is None:
-        return [], query_embedding
-    retrieved_doc = [data[index] for index in retrieved_embd_index]
+    retrieved_doc = k_nearest_neighbors(query_embedding, documents_embeddings, data, k=4, max_length=2000)
+    
     return retrieved_doc, query_embedding
 
 

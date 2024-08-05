@@ -9,6 +9,16 @@ from nltk.tokenize import sent_tokenize
 from scipy.spatial.distance import cosine
 import nltk
 import os
+from streamlit_pdf_viewer import pdf_viewer
+import streamlit.components.v1 as components
+
+# Custom function to embed PDF using PDF.js
+def pdf_viewer(url):
+    pdf_js_html = f"""
+    <iframe src="pdfjs/web/viewer.html?file={url}" width="100%" height="600px" style="border:none;"></iframe>
+    """
+    components.html(pdf_js_html, height=600)
+
 
 data_dir = os.path.join(os.getcwd(), 'data')
 nltk.data.path.append(data_dir)
@@ -137,7 +147,7 @@ def run_rag_mode():
                 """,
                 unsafe_allow_html=True,
             )
-            
+
             with st.sidebar:
                 st.write("## Retrieved Documents")
                 for idx, doc in enumerate(documents, start=1):
@@ -148,9 +158,36 @@ def run_rag_mode():
                     title_match = re.search(r"^#{1,2}\s*(.*)", doc, re.MULTILINE)
                     title = title_match.group(1) if title_match else f"Document {idx}"
                     
+                    # Construct the PDF file path
+                    pdf_file_path = os.path.join("retriever/ressources", f"{source}.pdf")
+                    if source == "IAP Textbook of pediatrics":
+                        link = "https://drive.google.com/file/d/1VxiqOJLL2QEJDUOnr7cDuOlHCQr5SUEA/view?usp=drive_link"
+                    elif source == "ICRC NURSING GUIDELINES":
+                        link = "https://drive.google.com/file/d/1txxBBt4Xgq-0XPClu98lW-ivDGx5TZP6/view?usp=drive_link"
+                    elif source == "ICRC war surgery guidelines":
+                        link = "https://drive.google.com/file/d/15EqrezLa1rTclVCEkCqRC2Gly5utsjr-/view?usp=drive_link"
+                    elif source == "MSF Clinical guidelines - Diagnosis and treatment manual" :
+                        link = "https://drive.google.com/file/d/1QKxbOrGr_TNfi5beRgt8KrXL-pZeIK_w/view?usp=drive_link"
+                    elif source == "msf Essential obstetric and newborn care":
+                        link = "https://drive.google.com/file/d/1Mo2mK8Nw7Tr2P8P5o7QViVYMdUYEaQp2/view?usp=drive_link"
+                    elif source == "Tropical diseases ethiology, pathologies and treatment":
+                        link = "https://drive.google.com/file/d/1zbqpbKCZidxbip3GjxSwyjna3cfE9khp/view?usp=drive_link"
+                    elif source == "tropical medecine and emerging infectious diseases":
+                        link = "https://drive.google.com/file/d/1TRkc7fbp68_2Ops1C3tZuok2lGxFWII6/view?usp=drive_link"
+                    elif source == "Tropical Medicine A Clinical Text":
+                        link = "https://drive.google.com/file/d/1HwM9hTCEiAdR8_puFdCMg1dGjKUG2wVl/view?usp=drive_link"
+                    else:
+                        link = "https://drive.google.com/drive/folders/1FzHxRc9l4qK_1CizCqRgiH0_mKx2pe4V?usp=drive_link"
+                    pdf_path = "https://drive.google.com/uc?export=download&id=1VxiqOJLL2QEJDUOnr7cDuOlHCQr5SUEA"
+                    # Check if the PDF file exists
+                    if os.path.exists(pdf_file_path):
+                        pdf_url = f'http://localhost:8000/{source}.pdf'
+                        pdf_link = f'[Open PDF]({pdf_file_path})'
+                    else:
+                        pdf_link = "Source not available"
+                    
                     # Remove the title from the document content
                     content = re.sub(r"^\*\*.*?\*\*\s*|^#{1,2}\s*.*\n", '', doc, flags=re.MULTILINE).strip()
-                    
                     
                     sentences = _split_sentences(content)
                     sentence_embeddings = convert_to_vector(sentences)
@@ -163,7 +200,14 @@ def run_rag_mode():
                     
                     # Using simple expander title and styled title inside the expander
                     with st.expander(f"from: {source}, paragraph: {title}"):
+                        pdf_viewer_url = f"/static/pdfjs/web/viewer.html?file={pdf_path}"
+                        st.components.v1.html(f'<iframe src="{pdf_viewer_url}" width="100%" height="600px" style="border:none;"></iframe>', height=600)
+
+                        st.markdown(f'You can check the source at: {link}', unsafe_allow_html=True)
+                        
                         st.markdown(f'<div class="document-content">{highlighted_doc}</div>', unsafe_allow_html=True)
+                        
+                        
 
             # Now generate the response using the documents (if necessary) and prompt
             question = [{"role": "system", "content": system_prompt}]

@@ -1,3 +1,11 @@
 retriever/icrc_embeddings.jsonl filter=lfs diff=lfs merge=lfs -text
 retriever/books_2.jsonl filter=lfs diff=lfs merge=lfs -text
 retriever/books_embeddings_2.jsonl filter=lfs diff=lfs merge=lfs -text
+retriever/ressources/tropical[[:space:]]medecine[[:space:]]and[[:space:]]emerging[[:space:]]infectious[[:space:]]diseases.pdf filter=lfs diff=lfs merge=lfs -text
+retriever/ressources/Tropical[[:space:]]Medicine[[:space:]]A[[:space:]]Clinical[[:space:]]Text.pdf filter=lfs diff=lfs merge=lfs -text
+retriever/ressources/IAP[[:space:]]Textbook[[:space:]]of[[:space:]]pediatrics.pdf filter=lfs diff=lfs merge=lfs -text
+retriever/ressources/ICRC[[:space:]]NURSING[[:space:]]GUIDELINES.pdf filter=lfs diff=lfs merge=lfs -text
+retriever/ressources/ICRC[[:space:]]war[[:space:]]surgery[[:space:]]guidelines.pdf filter=lfs diff=lfs merge=lfs -text
+retriever/ressources/MSF[[:space:]]Clinical[[:space:]]guidelines[[:space:]]-[[:space:]]Diagnosis[[:space:]]and[[:space:]]treatment[[:space:]]manual.pdf filter=lfs diff=lfs merge=lfs -text
+retriever/ressources/msf[[:space:]]Essential[[:space:]]obstetric[[:space:]]and[[:space:]]newborn[[:space:]]care.pdf filter=lfs diff=lfs merge=lfs -text
+retriever/ressources/Tropical[[:space:]]diseases[[:space:]]ethiology,[[:space:]]pathologies[[:space:]]and[[:space:]]treatment.pdf filter=lfs diff=lfs merge=lfs -text

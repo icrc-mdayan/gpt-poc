@@ -11,6 +11,7 @@ import nltk
 import os
 from streamlit_pdf_viewer import pdf_viewer
 import streamlit.components.v1 as components
+from urllib.parse import quote
 
 # Custom function to embed PDF using PDF.js
 def pdf_viewer(url):
@@ -160,25 +161,8 @@ def run_rag_mode():
                     
                     # Construct the PDF file path
                     pdf_file_path = os.path.join("retriever/ressources", f"{source}.pdf")
-                    if source == "IAP Textbook of pediatrics":
-                        link = "https://drive.google.com/file/d/1VxiqOJLL2QEJDUOnr7cDuOlHCQr5SUEA/view?usp=drive_link"
-                    elif source == "ICRC NURSING GUIDELINES":
-                        link = "https://drive.google.com/file/d/1txxBBt4Xgq-0XPClu98lW-ivDGx5TZP6/view?usp=drive_link"
-                    elif source == "ICRC war surgery guidelines":
-                        link = "https://drive.google.com/file/d/15EqrezLa1rTclVCEkCqRC2Gly5utsjr-/view?usp=drive_link"
-                    elif source == "MSF Clinical guidelines - Diagnosis and treatment manual" :
-                        link = "https://drive.google.com/file/d/1QKxbOrGr_TNfi5beRgt8KrXL-pZeIK_w/view?usp=drive_link"
-                    elif source == "msf Essential obstetric and newborn care":
-                        link = "https://drive.google.com/file/d/1Mo2mK8Nw7Tr2P8P5o7QViVYMdUYEaQp2/view?usp=drive_link"
-                    elif source == "Tropical diseases ethiology, pathologies and treatment":
-                        link = "https://drive.google.com/file/d/1zbqpbKCZidxbip3GjxSwyjna3cfE9khp/view?usp=drive_link"
-                    elif source == "tropical medecine and emerging infectious diseases":
-                        link = "https://drive.google.com/file/d/1TRkc7fbp68_2Ops1C3tZuok2lGxFWII6/view?usp=drive_link"
-                    elif source == "Tropical Medicine A Clinical Text":
-                        link = "https://drive.google.com/file/d/1HwM9hTCEiAdR8_puFdCMg1dGjKUG2wVl/view?usp=drive_link"
-                    else:
-                        link = "https://drive.google.com/drive/folders/1FzHxRc9l4qK_1CizCqRgiH0_mKx2pe4V?usp=drive_link"
-                    pdf_path = "https://drive.google.com/uc?export=download&id=1VxiqOJLL2QEJDUOnr7cDuOlHCQr5SUEA"
+                    encoded_source = quote(source)
+                    pdf_path = f"https://media.githubusercontent.com/media/icrc-mdayan/gpt-poc/main/retriever/ressources/{encoded_source}.pdf"
                     # Check if the PDF file exists
                     if os.path.exists(pdf_file_path):
                         pdf_url = f'http://localhost:8000/{source}.pdf'
@@ -200,12 +184,13 @@ def run_rag_mode():
                     
                     # Using simple expander title and styled title inside the expander
                     with st.expander(f"from: {source}, paragraph: {title}"):
+                        
+                        st.markdown(f'You can check the source at: {pdf_path}', unsafe_allow_html=True)
+                        
+                        st.markdown(f'<div class="document-content">{highlighted_doc}</div>', unsafe_allow_html=True)
                         pdf_viewer_url = f"/static/pdfjs/web/viewer.html?file={pdf_path}"
                         st.components.v1.html(f'<iframe src="{pdf_viewer_url}" width="100%" height="600px" style="border:none;"></iframe>', height=600)
 
-                        st.markdown(f'You can check the source at: {link}', unsafe_allow_html=True)
-                        
-                        st.markdown(f'<div class="document-content">{highlighted_doc}</div>', unsafe_allow_html=True)
                         
                         
 

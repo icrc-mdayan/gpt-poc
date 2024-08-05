@@ -27,8 +27,10 @@
       <div id="pdfViewer" class="pdfViewer"></div>
     </div>
     <script type="module">
-      import { pdfjsLib } from "../build/pdf.js";
+      import * as pdfjsLib from "../build/pdf.js";
       import { PDFViewer } from "./viewer.mjs";
+
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "../build/pdf.worker.js";
 
       const urlParams = new URLSearchParams(window.location.search);
       const pdfUrl = urlParams.get("file");

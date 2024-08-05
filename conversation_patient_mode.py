@@ -85,7 +85,13 @@ def run_conversation_patient_mode():
         top_p = 0.9
         max_tokens = 1024
 
-        response = client.chat.completions.create(model="llama-3-70b-meditron", messages=prompt_input, temperature=temperature, top_p=top_p, max_tokens=max_tokens)
+        response = client.chat.completions.create(
+            model="llama-3-70b-meditron", 
+            messages=prompt_input, 
+            temperature=temperature, 
+            top_p=top_p,
+            max_tokens=max_tokens
+        )
         return response.choices[0].message.content
 
     def generate_response(prompt_input):

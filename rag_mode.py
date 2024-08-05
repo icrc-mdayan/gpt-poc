@@ -164,11 +164,6 @@ def run_rag_mode():
                     encoded_source = quote(source)
                     pdf_path = f"https://media.githubusercontent.com/media/icrc-mdayan/gpt-poc/main/retriever/ressources/{encoded_source}.pdf"
                     # Check if the PDF file exists
-                    if os.path.exists(pdf_file_path):
-                        pdf_url = f'http://localhost:8000/{source}.pdf'
-                        pdf_link = f'[Open PDF]({pdf_file_path})'
-                    else:
-                        pdf_link = "Source not available"
                     
                     # Remove the title from the document content
                     content = re.sub(r"^\*\*.*?\*\*\s*|^#{1,2}\s*.*\n", '', doc, flags=re.MULTILINE).strip()

@@ -12,7 +12,7 @@ def run_conversation_general_mode():
             <div style="padding: 10px;">
                 You can ask the chatbot any general questions about medical guidelines or practices and have a conversation with it.
                 The chatbot will provide you with the most accurate and relevant information based on the context of the conversation.
-                If you want to discuss a patient's condition, please switch to the <b>Patient-Diagnostic</b> mode.
+                If you want to discuss a patient's condition, please switch to the <b>Conversation-patient</b> mode.
             </div>
             """, unsafe_allow_html=True)
 

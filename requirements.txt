@@ -7,3 +7,5 @@ scikit-learn
 nltk
 streamlit_pdf_viewer
 urllib3
+hnswlib
+cohere

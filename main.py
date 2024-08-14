@@ -5,6 +5,9 @@ from conversation_general_mode import run_conversation_general_mode
 import os
 from datetime import datetime
 import nltk
+import json
+from retriever.embedding import Vectorstore
+
 
 # Set the NLTK data path to the specified directory
 data_dir = os.path.join(os.getcwd(), 'data')
@@ -65,6 +68,28 @@ with st.sidebar:
     st.subheader('Mode Selection')
     selected_mode = st.radio('Choose a mode', ['ICRC-knowledge based chatbot', 'Conversation-patient', 'Conversation-general'], key='selected_mode')
 
+    
+
+# Load the appropriate mode
+if selected_mode == 'ICRC-knowledge based chatbot':
+    if 'vector_store' not in st.session_state:
+        with open('retriever/books_embeddings_2.jsonl', 'r') as json_file:
+                documents_embeddings = json.load(json_file)
+        data = []
+        with open('retriever/books_split_final.jsonl', 'r') as json_file:
+            for line in json_file:
+                data.append(json.loads(line))
+        shape = 1024
+        print("here")
+        st.session_state.vector_store = Vectorstore(document_embeddings=documents_embeddings, data=data, shape=shape)
+        print("there")
+    run_rag_mode(st.session_state.vector_store)
+elif selected_mode == 'Conversation-patient':
+    run_conversation_patient_mode()
+else:
+    run_conversation_general_mode()
+
+with st.sidebar:
     st.subheader('Save and clear chat history')
 
     # Add a button to save the conversation
@@ -75,11 +100,3 @@ with st.sidebar:
             save_conversation(st.session_state.conversation_messages, selected_mode, build_additional_information())
         elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
             save_conversation(st.session_state.conversation_general_messages, selected_mode)
-
-# Load the appropriate mode
-if selected_mode == 'ICRC-knowledge based chatbot':
-    run_rag_mode()
-elif selected_mode == 'Conversation-patient':
-    run_conversation_patient_mode()
-else:
-    run_conversation_general_mode()

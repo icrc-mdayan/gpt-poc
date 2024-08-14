@@ -27,13 +27,14 @@
       <div id="pdfViewer" class="pdfViewer"></div>
     </div>
     <script type="module">
-      import * as pdfjsLib from "../build/pdf.js";
+      import * as pdfjsLib from "../build/pdf.mjs";
       import { PDFViewer } from "./viewer.mjs";
 
-      pdfjsLib.GlobalWorkerOptions.workerSrc = "../build/pdf.worker.js";
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "../build/pdf.worker.mjs";
 
       const urlParams = new URLSearchParams(window.location.search);
       const pdfUrl = urlParams.get("file");
+      console.log("PDF URL:", pdfUrl); 
 
       if (!pdfUrl) {
         console.error("No PDF file specified.");

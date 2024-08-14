@@ -1,6 +1,5 @@
 import streamlit as st
 from openai import OpenAI
-from retriever.embedding import Vectorstore
 import re
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
@@ -9,18 +8,11 @@ from nltk.tokenize import sent_tokenize
 from scipy.spatial.distance import cosine
 import nltk
 import os
-from streamlit_pdf_viewer import pdf_viewer
 import streamlit.components.v1 as components
 from urllib.parse import quote
 import json
-
-# Custom function to embed PDF using PDF.js
-def pdf_viewer(url):
-    pdf_js_html = f"""
-    <iframe src="pdfjs/web/viewer.html?file={url}" width="100%" height="600px" style="border:none;"></iframe>
-    """
-    components.html(pdf_js_html, height=600)
-
+import pymupdf 
+import io
 
 data_dir = os.path.join(os.getcwd(), 'data')
 nltk.data.path.append(data_dir)
@@ -57,7 +49,7 @@ def find_closest_sentence(query_embedding, sentences, sentence_embeddings):
             closest_sentence = sentence
     return closest_sentence
 
-def run_rag_mode():
+def run_rag_mode(vector_store):
     # Page title for RAG-mode
     st.title('ICRC-knowledge based chatbot')
     st.write(
@@ -90,20 +82,16 @@ def run_rag_mode():
         with st.chat_message(message["role"]):
             st.write(message["content"])
 
-    def clear_chat_history():
-        st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-    st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
-
     def llm_generate_response(prompt_input):
         client = OpenAI(base_url="http://104.171.203.227:8000/v1", api_key="EMPTY")
         response = client.chat.completions.create(model="llama-3-70b-meditron", messages=prompt_input)
         return response.choices[0].message.content
 
-    def generate_response(prompt_input, vectore_store):
+    def generate_response(prompt_input, vector_store):
         with open("prompts/system_prompt_rag.txt", 'r') as file:
             system_prompt = file.read().strip()
 
-        documents, query_embedding = vectore_store.retrieve_documents(prompt_input)
+        documents, query_embedding = vector_store.retrieve_documents(prompt_input)
 
         if documents:
             st.markdown(
@@ -152,12 +140,6 @@ def run_rag_mode():
             with st.sidebar:
                 st.write("## Retrieved Documents")
                 for idx, doc in enumerate(documents, start=1):
-                    # Extract the title from the document
-                    # source_match = re.search(r"^\*\*(.*?)\*\*", doc)
-                    # source = source_match.group(1) if source_match else "Unknown Source"
-
-                    # title_match = re.search(r"^#{1,2}\s*(.*)", doc, re.MULTILINE)
-                    # title = title_match.group(1) if title_match else f"Document {idx}"
                     source = doc["source_document"]
                     title = doc["paragraph_title"]
                     if doc["subtitle"] is not None:
@@ -167,7 +149,6 @@ def run_rag_mode():
                     pdf_path = f"https://media.githubusercontent.com/media/icrc-mdayan/gpt-poc/main/retriever/ressources/{encoded_source}.pdf"
                     
                     # Remove the title from the document content
-                    #content = re.sub(r"^\*\*.*?\*\*\s*|^#{1,2}\s*.*\n", '', doc, flags=re.MULTILINE).strip()
                     content = doc["text"]
                     sentences = _split_sentences(content)
                     sentence_embeddings = convert_to_vector(sentences)
@@ -179,17 +160,30 @@ def run_rag_mode():
                     highlighted_doc = content.replace(closest_sentence, f'<span class="highlight">{closest_sentence}</span>')
                     
                     # Using simple expander title and styled title inside the expander
-                    with st.expander(f"from: {source}, paragraph: {title}"):
-                        
-                        st.markdown(f'You can check the source at: {pdf_path}', unsafe_allow_html=True)
+                    with st.expander(f"from: {source}, paragraph: {title}, page: {doc['page_number']}"):
                         
                         st.markdown(f'<div class="document-content">{highlighted_doc}</div>', unsafe_allow_html=True)
-                        pdf_viewer_url = f"/static/pdfjs/web/viewer.html?file={pdf_path}"
-                        st.components.v1.html(f'<iframe src="{pdf_viewer_url}" width="100%" height="600px" style="border:none;"></iframe>', height=600)
 
-                        
-                        
+                        py_doc = pymupdf.open(os.path.join('retriever', 'ressources', f'{source}.pdf'))
 
+                        # Select the page you want to render by index
+                        page_1 = py_doc.load_page(doc["page_number"]-1)  # 0 is the first page
+                        page_2 = py_doc.load_page(doc["page_number"])  
+
+                        # Render the page as an image
+                        pix_1 = page_1.get_pixmap()
+                        pix_2 = page_2.get_pixmap()
+
+                        # Convert the image data to a BytesIO stream
+                        img_stream_1 = io.BytesIO(pix_1.tobytes("png"))
+                        img_stream_2 = io.BytesIO(pix_2.tobytes("png"))
+
+                        # Display the image in Streamlit
+                        st.image(img_stream_1)
+                        st.image(img_stream_2)
+
+                        st.markdown(f'You can check the source at: {pdf_path}', unsafe_allow_html=True)
+                        
             # Now generate the response using the documents (if necessary) and prompt
             question = [{"role": "system", "content": system_prompt}]
             question.extend(st.session_state.rag_messages[:-1])
@@ -206,23 +200,18 @@ def run_rag_mode():
         st.session_state.rag_messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.write(prompt)
-    with open('retriever/books_embeddings_2.jsonl', 'r') as json_file:
-            documents_embeddings = json.load(json_file)
-    data = []
-    with open('retriever/books_split_final.jsonl', 'r') as json_file:
-        for line in json_file:
-            data.append(json.loads(line))
-    shape = 1024
-    vectore_store = Vectorstore(document_embeddings=documents_embeddings, data=data, shape=shape)
+    
     # Generate a new response if last message is not from assistant
     if st.session_state.rag_messages[-1]["role"] != "assistant":
         with st.chat_message("assistant"):
             st.spinner("Thinking...")
-            response = generate_response(prompt, vectore_store)
+            response = generate_response(prompt, vector_store)
             placeholder = st.empty()
             placeholder.markdown(response)
             
             # Update the session state with the assistant's response
             message = {"role": "assistant", "content": response}
             st.session_state.rag_messages.append(message)      
-                   
+    def clear_chat_history():
+        st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+    st.sidebar.button('Clear Chat History', on_click=clear_chat_history)

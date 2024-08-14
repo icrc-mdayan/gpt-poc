@@ -71,24 +71,29 @@ class Vectorstore:
         #             with open(file_path, 'r') as json_file:
         #                 data.append(json.load(json_file))
         
-        max_length=2000
+        max_length=1750
         #top_docs = self.k_nearest_neighbors(query_embedding, k=k, max_length=max_length)
         retrieved_embed, distance = self.idx.knn_query(query_embedding, k=k)
-        top_docs = [self.data[index] for index in retrieved_embed[0]]
-        results = self.co.rerank(model= "rerank-english-v3.0", query=query, documents=[doc["text"] for doc in top_docs], top_n = 5).results
-        total_length = 0
-        retrieved_doc = []  
-        for res in results:
-            # if res.relevance_score < 0.7:
-            #     break
-            #quick and dirty fix
-            if top_docs[res.index]["source_document"] == "**Tropical diseases ethiology, pathologies and treatment":
-                continue
-            retrieved_doc.append(top_docs[res.index])
-            total_length += len(top_docs[res.index]["text"])
-            if total_length > max_length:
-                break
-        return retrieved_doc, query_embedding
+
+        print(distance)
+        top_docs = [self.data[index] for index, distance in zip(retrieved_embed[0], distance[0]) if distance < 0.3]
+        if len(top_docs) == 0:
+            return [], query_embedding
+        else:
+            results = self.co.rerank(model= "rerank-english-v3.0", query=query, documents=[doc["text"] for doc in top_docs], top_n = 5).results
+            total_length = 0
+            retrieved_doc = []  
+            for res in results:
+                # if res.relevance_score < 0.7:
+                #     break
+                #quick and dirty fix
+                if top_docs[res.index]["source_document"] == "**Tropical diseases ethiology, pathologies and treatment":
+                    continue
+                retrieved_doc.append(top_docs[res.index])
+                total_length += len(top_docs[res.index]["text"])
+                if total_length > max_length:
+                    break
+            return retrieved_doc, query_embedding
 
 
 if __name__ == "__main__":

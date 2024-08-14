@@ -80,7 +80,7 @@ if selected_mode == 'ICRC-knowledge based chatbot':
             for line in json_file:
                 data.append(json.loads(line))
         shape = 1024
-        print("here")
+        print("heeeere")
         st.session_state.vector_store = Vectorstore(document_embeddings=documents_embeddings, data=data, shape=shape)
         print("there")
     run_rag_mode(st.session_state.vector_store)
@@ -100,3 +100,6 @@ with st.sidebar:
             save_conversation(st.session_state.conversation_messages, selected_mode, build_additional_information())
         elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
             save_conversation(st.session_state.conversation_general_messages, selected_mode)
+    if st.sidebar.button("Clear Chat History"):
+        if selected_mode == 'ICRC-knowledge based chatbot' and "rag_messages" in st.session_state:
+            st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]

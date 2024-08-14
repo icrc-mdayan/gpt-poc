@@ -11,6 +11,7 @@ def download_resources(data_dir):
     
     # Download the required NLTK resource into the specified directory
     nltk.download('punkt', download_dir=data_dir)
+    nltk.download('punkt_tab', download_dir=data_dir)
 
 if __name__ == "__main__":
     data_dir = os.path.join(os.getcwd(), 'data')

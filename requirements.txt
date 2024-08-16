@@ -11,3 +11,4 @@ hnswlib
 cohere
 PyMuPDF
 fuzzywuzzy
+llamaapi

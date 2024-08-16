@@ -76,7 +76,7 @@ class Vectorstore:
         retrieved_embed, distance = self.idx.knn_query(query_embedding, k=k)
 
         print(distance)
-        top_docs = [self.data[index] for index, distance in zip(retrieved_embed[0], distance[0]) if distance < 0.3]
+        top_docs = [self.data[index] for index, distance in zip(retrieved_embed[0], distance[0]) if distance < 0.25]
         if len(top_docs) == 0:
             return [], query_embedding
         else:

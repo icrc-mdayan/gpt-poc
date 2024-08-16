@@ -71,7 +71,7 @@ class Vectorstore:
         #             with open(file_path, 'r') as json_file:
         #                 data.append(json.load(json_file))
         
-        max_length=1750
+        max_length=1500
         #top_docs = self.k_nearest_neighbors(query_embedding, k=k, max_length=max_length)
         retrieved_embed, distance = self.idx.knn_query(query_embedding, k=k)
 

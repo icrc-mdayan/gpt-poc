@@ -29,8 +29,8 @@ def convert_to_vector(texts):
         vo = voyageai.Client()
         embeddings = []
         # Je devrais pas faire doc par doc, mais faire par batch et après ajouter chaque embedded document dans documents_embeddings
-        for i in range(0, len(texts), 100):
-            embed = vo.embed(texts[i:i+100], model="voyage-large-2-instruct", input_type="document").embeddings
+        for i in range(0, len(texts), 128):
+            embed = vo.embed(texts[i:i+128], model="voyage-large-2-instruct", input_type="document").embeddings
             for emb in embed:
                 embeddings.append(emb) 
         # embeddings = np.array([item.embedding for item in response.data])

@@ -103,3 +103,7 @@ with st.sidebar:
     if st.sidebar.button("Clear Chat History"):
         if selected_mode == 'ICRC-knowledge based chatbot' and "rag_messages" in st.session_state:
             st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+        elif selected_mode == 'Conversation-patient' and "conversation_messages" in st.session_state:
+            st.session_state.conversation_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+        elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
+            st.session_state.conversation_general_messages = [{"role": "assistant", "content": "How may I assist you today?"}]

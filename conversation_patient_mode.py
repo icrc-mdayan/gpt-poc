@@ -85,17 +85,14 @@ def run_conversation_patient_mode():
         with st.chat_message(message["role"]):
             st.write(message["content"])
 
-    total_text_conversation = ""
+    # def clear_chat_history():
+    #     st.session_state.conversation_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+    #     st.session_state['location'] = ''
+    #     st.session_state['age'] = None
+    #     st.session_state['Sex'] = 'Male'
+    #     st.session_state['travel_history'] = ''
 
-    def clear_chat_history():
-        st.session_state.conversation_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-        st.session_state.total_text_conversation = ""  # This will be repopulated with the system prompt on the next interaction
-        st.session_state['location'] = ''
-        st.session_state['age'] = None
-        st.session_state['Sex'] = 'Male'
-        st.session_state['travel_history'] = ''
-
-    st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
+    # st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
     def llm_generate_response(prompt_input, total_text_conversation):
         # client = OpenAI(base_url="http://104.171.203.227:8000/v1", api_key="EMPTY")

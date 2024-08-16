@@ -68,7 +68,7 @@ with st.sidebar:
     st.subheader('Mode Selection')
     selected_mode = st.radio('Choose a mode', ['ICRC-knowledge based chatbot', 'Conversation-patient', 'Conversation-general'], key='selected_mode')
 
-
+    
 
 # Load the appropriate mode
 if selected_mode == 'ICRC-knowledge based chatbot':

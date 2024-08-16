@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Viewer</title>
+    <link rel="stylesheet" href="viewer.css" />
+    <style>
+      /* Add custom styles here */
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      #viewerContainer {
+        height: 100vh;
+        width: 100vw;
+        overflow: auto;
+      }
+      #pdfViewer {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="viewerContainer">
+      <div id="pdfViewer" class="pdfViewer"></div>
+    </div>
+    <script type="module">
+      import * as pdfjsLib from "../build/pdf.mjs";
+      import { PDFViewer } from "./viewer.mjs";
+
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "../build/pdf.worker.mjs";
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const pdfUrl = urlParams.get("file");
+      console.log("PDF URL:", pdfUrl); 
+
+      if (!pdfUrl) {
+        console.error("No PDF file specified.");
+      } else {
+        pdfjsLib
+          .getDocument(pdfUrl)
+          .promise.then((pdf) => {
+            console.log("PDF loaded");
+
+            const viewer = new PDFViewer({
+              container: document.getElementById("pdfViewer"),
+            });
+
+            const scale = 1.5;
+            const pageNumber = 1;
+
+            pdf.getPage(pageNumber).then((page) => {
+              console.log("Page loaded");
+
+              const viewport = page.getViewport({ scale: scale });
+
+              // Prepare canvas using PDF page dimensions
+              const canvas = document.createElement("canvas");
+              const context = canvas.getContext("2d");
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+
+              // Append the canvas to the viewer container
+              document.getElementById("pdfViewer").appendChild(canvas);
+
+              // Render the page into the canvas context
+              const renderContext = {
+                canvasContext: context,
+                viewport: viewport,
+              };
+              const renderTask = page.render(renderContext);
+              renderTask.promise.then(() => {
+                console.log("Page rendered");
+              });
+            });
+          })
+          .catch((reason) => {
+            console.error(reason);
+          });
+      }
+    </script>
+  </body>
+</html>

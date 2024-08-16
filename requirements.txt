@@ -10,3 +10,4 @@ urllib3
 hnswlib
 cohere
 PyMuPDF
+fuzzywuzzy

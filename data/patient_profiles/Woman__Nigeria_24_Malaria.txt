@@ -1,0 +1,88 @@
+Patient Case: 24-Year-Old Woman Living in Nigeria
+Patient Information
+Age: 24
+Gender: Female
+Location: Kano, Nigeria
+Occupation: Student
+Presenting Symptoms
+High Temperature:
+Onset: 3 days ago
+Severity: High-grade fever (up to 39°C/102.2°F)
+Pattern: Intermittent with episodes of sweats and chills, occurring mainly in the late afternoon and night
+Sweats and Chills:
+Onset: 3 days ago, concurrent with fever
+Pattern: Accompanying fever episodes, severe sweating during chills
+Headaches:
+Onset: 3 days ago
+Location: Frontal region
+Severity: Severe, throbbing, worsens with fever
+Feeling Confused:
+Onset: 2 days ago
+Episodes: Intermittent confusion, mostly during fever spikes
+Feeling Very Tired and Sleepy:
+Onset: 3 days ago
+Severity: Extreme fatigue, sleeps for long hours during the day
+Note: Increased drowsiness noticed by family
+Feeling and Being Sick:
+Onset: 3 days ago
+Nausea: Persistent, aggravated by food
+Vomiting: Occurred twice in the past 2 days
+Tummy Pain and Diarrhoea:
+Onset: 2 days ago
+Location: Generalized abdominal discomfort
+Diarrhoea: Frequent, watery stools, 4-5 times a day
+Loss of Appetite:
+Onset: 3 days ago
+Severity: Severe, barely eats
+Muscle Pains:
+Onset: 3 days ago
+Location: Generalized, severe in the lower back and legs
+Yellow Skin or Whites of the Eyes (Jaundice):
+Onset: 1 day ago
+Note: Noticed by family, yellowish tinge in sclera
+Sore Throat, Cough, and Difficulty Breathing:
+Onset: 2 days ago
+Sore Throat: Mild to moderate, constant
+Cough: Dry, non-productive
+Difficulty Breathing: Mild shortness of breath, worse with exertion
+Medical History
+Past Medical History:
+No previous history of malaria
+No chronic illnesses or known medical conditions
+Up-to-date with childhood vaccinations
+Recent Travel History:
+No recent travel outside of Kano
+Family Medical History:
+No family history of chronic diseases
+Both parents and siblings are healthy
+Medications:
+No regular medications
+Took paracetamol for fever relief
+Allergies:
+No known drug allergies
+Social and Lifestyle History
+Living Conditions:
+Lives in a densely populated area with high mosquito exposure
+Uses mosquito nets irregularly
+Diet:
+Typically balanced but has been significantly reduced due to current symptoms
+Hydration:
+Decreased fluid intake due to nausea
+Hygiene:
+Practices regular hygiene
+Alcohol/Smoking:
+No history of alcohol or tobacco use
+Clinical Examination Findings
+General Appearance:
+Appears ill and fatigued, with noticeable jaundice
+Vital Signs:
+Temperature: 39°C (102.2°F)
+Pulse: 110 beats per minute (tachycardia)
+Blood Pressure: 100/60 mmHg (slightly low)
+Respiratory Rate: 20 breaths per minute (mild tachypnea)
+Abdomen:
+Soft but tender on palpation
+Respiratory:
+Clear breath sounds, mild dyspnea on exertion
+Neurological:
+Mild confusion, oriented to person but not time or place

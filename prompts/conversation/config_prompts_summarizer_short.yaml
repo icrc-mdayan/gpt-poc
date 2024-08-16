@@ -1,0 +1,17 @@
+patient_description_summarizer: |
+    Generate a short summary of the patient description based on the conversation.
+    Write as a doctor taking notes, using this format:
+    
+    - Patient
+      - Sex, Age, Location, Recent travels, Occupation
+    - Symptoms
+      - [Symptom] Timing, Location, Pain level, Type of pain
+    - Medical history
+      - Personal, Family, Current medications, Medical tests
+
+rules:
+  - Leave unknown fields blank
+  - Exclude diagnostic or treatment information
+  - Only include information from the conversation
+  - Strictly adhere to the format
+  - Don't add extra information

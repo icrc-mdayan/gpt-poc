@@ -1,0 +1,32 @@
+patient_decription_summarizer: |
+  Based on the following conversation, generate a short summary of the patient description. 
+  Write your answer as if you were a doctor taking notes about the patient, following this format: 
+  
+  - Patient
+    - Sex: [sex]
+    - Age: [age] years
+    - Location: [location]
+    - Recent travels: [travels]
+    - Occupation: [occupation]
+  - Symptoms
+    - [Symptom 1]
+      - Timing: [timing]
+      - Location: [location]
+      - Pain level: [pain_level]
+      - Type of pain: [pain_type]
+      ...
+  - Medical history
+    - Personal medical history: [history]
+    - Family medical history: [history]
+    - Current medications: [medications]
+    - Medical tests: [tests]
+
+  If you don’t know the answer to a field, you can leave it blank.
+  Don't provide any diagnostic or treatment information in this summary.
+  Don't provide any additional information that is not in the conversation.
+  Don't provide the next steps to follow.
+  Answer directly by strickly using the mentionned format. 
+  Don't add other information at the end.
+
+  Here are the information to summarize conciesly:
+

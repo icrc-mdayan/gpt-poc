@@ -1,0 +1,91 @@
+Patient Case: 8-Year-Old Girl Living in Togo
+Patient Information
+Age: 8
+Gender: Female
+Location: Lomé, Togo
+Occupation: Student
+Presenting Symptoms
+Cold-like Symptoms:
+
+Onset: 4 days ago
+Aches and Pains: Generalized body aches
+Runny Nose: Continuous nasal discharge
+Sneezing: Frequent
+Cough: Persistent, dry
+Sore, Red Eyes:
+
+Onset: 3 days ago
+Symptoms: Redness and discomfort, sensitivity to light
+Fever:
+
+Onset: 4 days ago
+Temperature: 38.5°C (101.3°F)
+Small Grey-White Spots in Mouth:
+
+Onset: 2 days ago
+Location: Inside of the cheeks and near molars
+Loss of Appetite:
+
+Onset: 4 days ago
+Severity: Significant reduction in food intake
+Tiredness, Irritability, and Lack of Energy:
+
+Onset: 4 days ago
+Symptoms: Fatigue, crankiness, and reluctance to play or engage in usual activities
+Medical History
+Past Medical History:
+
+No chronic illnesses
+Up-to-date with childhood vaccinations, except recent lapse in routine measles vaccination
+Medications:
+
+No regular medications
+Given paracetamol for fever relief
+Allergies:
+
+No known drug allergies
+Social and Lifestyle History
+Living Conditions:
+
+Housing: Lives in a densely populated urban area
+School Attendance: Regularly attends school until onset of symptoms
+Diet:
+
+Recent: Balanced diet, significantly reduced intake due to current symptoms
+Hydration:
+
+Adequate: Maintained fluid intake despite reduced appetite
+Hygiene:
+
+Practices: Regular hygiene
+Social Activities:
+
+Recent: Limited due to illness
+Clinical Examination Findings
+General Appearance:
+
+Appears ill and fatigued
+Noticeable irritability
+Vital Signs:
+
+Temperature: 38.5°C (101.3°F)
+Pulse: 95 beats per minute (normal for age)
+Blood Pressure: Not specified
+Respiratory Rate: 20 breaths per minute (normal for age)
+Ophthalmic:
+
+Conjunctivitis: Red, sore eyes with sensitivity to light
+Oral Examination:
+
+Koplik Spots: Small grey-white spots inside the mouth
+Respiratory:
+
+Breath Sounds: Clear
+Cough: Dry, non-productive
+Gastrointestinal:
+
+Appetite: Poor
+Abdomen: Soft, non-tender
+Neurological:
+
+Behavior: Tired and irritable, but alert and oriented

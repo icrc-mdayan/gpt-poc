@@ -1,0 +1,96 @@
+Patient Case: 55-Year-Old Man Living in Lebanon
+Patient Information
+Age: 55
+Gender: Male
+Location: Beirut, Lebanon
+Occupation: Office Worker
+Presenting Symptoms
+Neck or Jaw Pain:
+
+Onset: 1 week ago
+Pattern: Intermittent, often triggered by physical exertion
+Shoulder or Arm Pain:
+
+Onset: 1 week ago
+Location: Left shoulder and arm
+Severity: Moderate to severe
+Pattern: Intermittent, worsens with physical activity
+Fast Heartbeat:
+
+Onset: 5 days ago
+Pattern: Episodic, associated with physical exertion and stress
+Symptoms: Palpitations, feeling of fluttering in the chest
+Shortness of Breath:
+
+Onset: 1 week ago
+Pattern: Occurs during physical activity, such as walking up stairs or moderate exercise
+Severity: Mild to moderate
+Nausea and Vomiting:
+
+Onset: 4 days ago
+Pattern: Episodic, associated with physical exertion
+Severity: Mild nausea, with 2 episodes of vomiting
+Sweating:
+
+Onset: 4 days ago
+Pattern: Associated with physical exertion and episodes of chest discomfort
+Severity: Moderate to severe, drenching sweats
+Fatigue:
+
+Onset: 1 week ago
+Severity: Moderate, with decreased ability to perform daily activities
+Medical History
+Past Medical History:
+
+Hypertension: Diagnosed 5 years ago, on medication
+Hyperlipidemia: Diagnosed 3 years ago, on medication
+No previous heart conditions noted
+Medications:
+
+Antihypertensive: Specific medication not specified
+Statins: For hyperlipidemia, specific medication not specified
+Allergies:
+
+No known drug allergies
+Social and Lifestyle History
+Living Conditions:
+
+Housing: Lives in an apartment in a busy urban area
+Stress Factors: High-stress job, long working hours
+Diet:
+
+Recent: Balanced diet but occasional consumption of high-fat and high-salt foods
+Hydration:
+
+Adequate: Generally good fluid intake
+Hygiene:
+
+Practices: Regular hygiene
+Alcohol/Smoking:
+
+Alcohol: Occasional social drinker
+Smoking: History of smoking, quit 10 years ago
+Clinical Examination Findings
+General Appearance:
+
+Appears fatigued
+Mildly diaphoretic (sweaty)
+Vital Signs:
+
+Temperature: Normal
+Pulse: 95 beats per minute (tachycardia)
+Blood Pressure: 140/85 mmHg (elevated)
+Respiratory Rate: 18 breaths per minute (normal)
+Cardiovascular:
+
+Heart Sounds: Regular rhythm, no murmurs
+Neck: Carotid pulses normal, no bruits
+Respiratory:
+
+Breath Sounds: Clear, no wheezes or crackles
+Neurological:
+
+Normal: No focal deficits
+Musculoskeletal:
+
+Neck and Shoulder: Tenderness on palpation of the left shoulder and neck

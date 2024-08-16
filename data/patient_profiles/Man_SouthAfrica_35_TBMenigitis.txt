@@ -1,0 +1,90 @@
+Patient Case: 35-Year-Old Man Living in South Africa
+Patient Information
+Age: 35
+Gender: Male
+Location: South Africa
+Occupation: Not specified
+
+Presenting Symptoms
+
+Fever:
+Onset: 2 weeks ago
+Severity: Intermittent, high-grade
+Pattern: Accompanied by night sweats and chills
+
+Headaches:
+Onset: 2 weeks ago
+Location: Generalized, with increasing severity
+Severity: Initially mild, now severe and constant
+Associated Symptoms: Neck stiffness
+
+Fatigue:
+Onset: 2 weeks ago
+Severity: Severe, with notable weight loss over several months
+
+Confusion:
+Onset: 2 weeks ago
+Episodes: Intermittent, worsening over time
+
+Photophobia:
+Onset: 1 week ago
+Severity: Moderate to severe, worsening in bright light
+
+Nausea and Vomiting:
+Onset: 1 week ago
+Vomiting: Episodes of projectile vomiting, particularly in the mornings
+Medical History
+
+Past Medical History:
+Type 1 Diabetes: Known diagnosis
+HIV: Recently diagnosed, not yet on antiretroviral therapy (ART)
+No known infectious contacts
+
+Medications:
+For Diabetes: Insulin, specific regimen not specified
+
+Allergies:
+No known drug allergies
+Social and Lifestyle History
+
+Living Conditions:
+Housing: Not specified
+Mosquito Exposure: Not specified
+
+Diet:
+
+Recent: Unexplained weight loss suggests reduced intake or metabolic issues
+
+Hydration:
+Reduced: Due to nausea and vomiting
+
+Hygiene:
+
+Practices: Regular hygiene
+
+Alcohol/Smoking:
+History: Not specified
+Clinical Examination Findings
+
+General Appearance:
+Ill and fatigued
+Noticeable weight loss
+
+Vital Signs:
+Temperature: High, specific value not provided
+Pulse: Not specified
+Blood Pressure: Not specified
+Respiratory Rate: Not specified
+
+Head and Neck:
+Neck Stiffness: Present
+Photophobia: Present
+Abdomen:
+Tenderness: Not specified
+
+Respiratory:
+Symptoms: No specific abnormalities mentioned
+
+Neurological:
+Confusion: Present, intermittent, worsening over time
+Orientation: Not specified

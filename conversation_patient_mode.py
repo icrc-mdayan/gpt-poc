@@ -159,7 +159,7 @@ def run_conversation_patient_mode():
 
         prompt = [{"role": "system", "content": system_prompt_content}] + st.session_state.conversation_messages[-2:] + [{"role": "user", "content": prompt_input}]
         
-        #   print("PROMPT ::: ", prompt)
+        # print("PROMPT ::: ", prompt)
 
         # Add the system prompt to the total_text_conversation if it's not already there
         if not st.session_state.total_text_conversation.startswith("System: "):
@@ -224,7 +224,7 @@ def run_conversation_patient_mode():
         print("Estimation of total tokens: ", estimate_tokens(st.session_state.total_text_conversation))
 
         # Check token count and summarize if necessary
-        if estimate_tokens(st.session_state.total_text_conversation) > 2000:  # Lower threshold to allow room for summary
+        if estimate_tokens(st.session_state.total_text_conversation) > 3500:  # Lower threshold to allow room for summary
             # Extract the conversation part (excluding system prompt)
             system_prompt_end = st.session_state.total_text_conversation.find("\nUser: ")
             system_prompt = st.session_state.total_text_conversation[:system_prompt_end]

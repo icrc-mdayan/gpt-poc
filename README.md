@@ -18,4 +18,4 @@
     streamlit run main.py
     ```
 
-- If you want to access this online from a browser, click on the following link: [Streamlit App](https://mainpy-qfrpjq3muezgstcbxxk5rj.streamlit.app/)
+- If you want to access this online from a browser, click on the following link: [Streamlit App](https://healthpoc.streamlit.app/)

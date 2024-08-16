@@ -212,4 +212,3 @@ def run_rag_mode(vector_store):
             # Update the session state with the assistant's response
             message = {"role": "assistant", "content": response}
             st.session_state.rag_messages.append(message)      
-    

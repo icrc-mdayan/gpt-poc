@@ -66,7 +66,8 @@ with st.sidebar:
     st.title("💬 Meditron-3-70B 🩺")
 
     st.subheader('Mode Selection')
-    selected_mode = st.radio('Choose a mode', ['ICRC-knowledge based chatbot', 'Conversation-patient', 'Conversation-general'], key='selected_mode')
+    #selected_mode = st.radio('Choose a mode', ['ICRC-knowledge based chatbot', 'Conversation-patient', 'Conversation-general'], key='selected_mode')
+    selected_mode = st.radio('Choose a mode', ['ICRC-knowledge based chatbot', 'Conversation-patient'], key='selected_mode')
 
     
 
@@ -86,8 +87,8 @@ if selected_mode == 'ICRC-knowledge based chatbot':
     run_rag_mode(st.session_state.vector_store)
 elif selected_mode == 'Conversation-patient':
     run_conversation_patient_mode()
-else:
-    run_conversation_general_mode()
+# else:
+#     run_conversation_general_mode()
 
 with st.sidebar:
     st.subheader('Save and clear chat history')
@@ -98,8 +99,8 @@ with st.sidebar:
             save_conversation(st.session_state.rag_messages, selected_mode)
         elif selected_mode == 'Conversation-patient' and "conversation_messages" in st.session_state:
             save_conversation(st.session_state.conversation_messages, selected_mode, build_additional_information())
-        elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
-            save_conversation(st.session_state.conversation_general_messages, selected_mode)
+        # elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
+        #     save_conversation(st.session_state.conversation_general_messages, selected_mode)
     if st.sidebar.button("Clear Chat History"):
         if selected_mode == 'ICRC-knowledge based chatbot' and "rag_messages" in st.session_state:
             st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
@@ -109,5 +110,5 @@ with st.sidebar:
             st.session_state['age'] = None
             st.session_state['Sex'] = 'Male'
             st.session_state['travel_history'] = ''
-        elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
-            st.session_state.conversation_general_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+        # elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
+        #     st.session_state.conversation_general_messages = [{"role": "assistant", "content": "How may I assist you today?"}]

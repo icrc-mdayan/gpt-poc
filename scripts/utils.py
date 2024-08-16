@@ -25,6 +25,9 @@ def construct_prompt(conversation_mode):
 
     ## Formatting rules
     {yaml_content['formatting_rules'].strip()}
+
+    ## Patient information so far
+    ADDITIONAL_INFORMATION
 """
  
     else:

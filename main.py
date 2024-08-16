@@ -106,9 +106,9 @@ with st.sidebar:
             st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
         elif selected_mode == 'Conversation-patient' and "conversation_messages" in st.session_state:
             st.session_state.conversation_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-            st.session_state['location'] = ''
+            st.session_state['location'] = None
             st.session_state['age'] = None
-            st.session_state['Sex'] = 'Male'
-            st.session_state['travel_history'] = ''
-        # elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
-        #     st.session_state.conversation_general_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+            st.session_state['Sex'] = None
+            st.session_state['travel_history'] = None
+            # elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
+            #     st.session_state.conversation_general_messages = [{"role": "assistant", "content": "How may I assist you today?"}]

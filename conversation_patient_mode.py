@@ -7,10 +7,10 @@ from llamaapi import LlamaAPI
 
 def build_additional_information():
     patient_dict = {
-        "Sex": st.session_state.get('Sex') if st.session_state.get('Sex') not in (None, '') else None,
-        "age": f"{st.session_state['age']} year old" if st.session_state.get('age') not in (None, '') else None,
-        "location": st.session_state.get('location') if st.session_state.get('location') not in (None, '') else 'Unknown',
-        "travel_history": st.session_state.get('travel_history') if st.session_state.get('travel_history') not in (None, '') else 'Unknown'
+        "Sex": st.session_state.get('Sex_widget') if st.session_state.get('Sex_widget') not in (None, '') else None,
+        "age": f"{st.session_state.get('age_widget')} year old" if st.session_state.get('age_widget') not in (None, '') else None,
+        "location": st.session_state.get('location_widget') if st.session_state.get('location_widget') not in (None, '') else 'Unknown',
+        "travel_history": st.session_state.get('travel_history_widget') if st.session_state.get('travel_history_widget') not in (None, '') else 'Unknown'
     }
 
     additional_information = (
@@ -69,13 +69,26 @@ def run_conversation_patient_mode():
     # st.session_state['travel_history'] = ''
     
     with col1:
-        Sex = st.selectbox('Sex', ('Male', 'Female', 'Other'), key='Sex')
-        location = st.text_input('Location/Region', key='location', placeholder='City, Country', value=None)
-        # infant = st.checkbox('Infant', key='infant')
-    
+        Sex = st.selectbox('Sex', ('Male', 'Female', 'Other'), key='Sex_widget')
+        location = st.text_input('Location/Region', key='location_widget', placeholder='City, Country', value=None)
+
     with col2:
-        age = st.number_input('Age', min_value=0, max_value=120, key='age', placeholder='-', value=None)
-        travel_history = st.text_input('Recent travel places', key='travel_history', placeholder='City, Country', value=None)
+        age = st.number_input('Age', min_value=0, max_value=120, key='age_widget', placeholder='-', value=None)
+        travel_history = st.text_input('Recent travel places', key='travel_history_widget', placeholder='City, Country', value=None)
+
+    if "Sex" not in st.session_state:
+        st.session_state.Sex = st.session_state.Sex_widget
+
+    if "location" not in st.session_state:
+        st.session_state.location = st.session_state.location_widget
+
+    if "age" not in st.session_state:
+        st.session_state.age = st.session_state.age_widget
+
+    if "travel_history" not in st.session_state:
+        st.session_state.travel_history = st.session_state.travel_history_widget
+
+
 
     if "conversation_messages" not in st.session_state:
         st.session_state.conversation_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
@@ -124,7 +137,10 @@ def run_conversation_patient_mode():
 
         api_request_json = {
             "messages": prompt_input,
-            "stream": False
+            "stream": False,
+            "temperature": 0.6,
+            "max_tokens": 1024,
+            "top_p": 0.9
         }
 
         response = llama.run(api_request_json)
@@ -141,7 +157,7 @@ def run_conversation_patient_mode():
 
         # print("SYSTEM PROMPT ::: ", system_prompt_content)
 
-        prompt = [{"role": "system", "content": system_prompt_content}] + st.session_state.conversation_messages
+        prompt = [{"role": "system", "content": system_prompt_content}] + st.session_state.conversation_messages[-2:] + [{"role": "user", "content": prompt_input}]
         
         print("PROMPT ::: ", prompt)
 

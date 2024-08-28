@@ -81,7 +81,9 @@ if selected_mode == 'ICRC-knowledge based chatbot':
             for line in json_file:
                 data.append(json.loads(line))
         shape = 1024
-        st.session_state.vector_store = Vectorstore(document_embeddings=documents_embeddings, data=data, shape=shape)
+        with open('API_token.json', 'r') as json_file:
+            api_keys = json.load(json_file)
+        st.session_state.vector_store = Vectorstore(document_embeddings=documents_embeddings, data=data, shape=shape, voyageai_api_key = api_keys["voyageai"], cohere_api_key = api_keys['cohere'])
     run_rag_mode(st.session_state.vector_store)
 elif selected_mode == 'Conversation-patient':
     run_conversation_patient_mode()

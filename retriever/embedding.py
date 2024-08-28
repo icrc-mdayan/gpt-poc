@@ -6,14 +6,15 @@ import voyageai
 import numpy as np
 import cohere
 import hnswlib
+import sys
 
 class Vectorstore:
-    def __init__(self, document_embeddings = None, data = None, shape=1024):
+    def __init__(self, document_embeddings = None, data = None, shape=1024, voyageai_api_key = None, cohere_api_key = None):
         self.documents_embeddings = document_embeddings
         self.data = data
-        voyageai.api_key = "pa-dQ28MnYTDY5xF72HnbBVB5-w9FCs7E6yzzZBbAn0YPk"
+        voyageai.api_key = voyageai_api_key
         self.vo = voyageai.Client()
-        self.co = cohere.Client("5h8nFK1B6NLl9qVyqgwjBqA6wt3iOIfGfUaud4TG")
+        self.co = cohere.Client(cohere_api_key)
         self.idx = hnswlib.Index(space='cosine', dim=shape)
         self.idx.init_index(max_elements=len(self.documents_embeddings), ef_construction=200, M=16)
         self.idx.add_items(self.documents_embeddings)
@@ -71,11 +72,14 @@ class Vectorstore:
 
 if __name__ == "__main__":
     documents_embeddings = []
-    voyageai.api_key = "pa-dQ28MnYTDY5xF72HnbBVB5-w9FCs7E6yzzZBbAn0YPk"
+    with open('API_token.json', 'r') as json_file:
+        api_keys = json.load(json_file)
+    voyageai.api_key = api_keys["voyageai"]
+
         
     vo = voyageai.Client()
     data = []
-    with open('retriever/books_split_final.jsonl', 'r') as json_file:
+    with open(sys.argv[1], 'r') as json_file:
         for line in json_file:
             data.append(json.loads(line)["text"])
     new_data = []
@@ -95,6 +99,6 @@ if __name__ == "__main__":
             with open('retriever/tmp.jsonl', 'a') as json_file:
                 json.dump(emb, json_file)
                 json_file.write('\n')
-    with open('retriever/books_embeddings_2.jsonl', 'w') as json_file:
+    with open(sys.argv[2], 'w') as json_file:
         json.dump(documents_embeddings, json_file)
             

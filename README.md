@@ -19,3 +19,27 @@
     ```
 
 - If you want to access this online from a browser, click on the following link: [Streamlit App](https://healthpoc.streamlit.app/)
+
+
+## Setting up RAG Mode
+If you want to use RAG Mode you need to setup a cohere and voyageai account (they are free) and put your API keys in API_token.json
+
+## Modifying base documents for RAG Mode
+
+If you want to embed new documents you can run the embedding.py script with the following command:
+ 
+    ```bash
+    python3 retriever\embedding.py your_file.jsonl new_embeddings_file.jsonl
+    ```
+This will create a new embedding file.
+You then need to change the files at line 77 and 80 in main.py to put your embedding and documents files
+
+note:
+The format of the documents needs to be:
+    ```bash
+    {"source_document": , "page_number": , "paragraph_title": , "subtitle": , "text": }
+    ```
+You should also put the source documents in the 'retriever\ressources' folder if you want the user to be able to check at the source document. 
+
+note 2:
+If you want to use semantic chunking you can use the chunk_text function from documents\data_splitting.py

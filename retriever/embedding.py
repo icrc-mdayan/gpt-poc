@@ -36,46 +36,21 @@ class Vectorstore:
             return []
         # Take the top k related embeddings
         top_k_related_indices = sorted_indices[:k]
-        #   top_k_related_embeddings = documents_embeddings[sorted_indices[:k]]
-        #   top_k_related_embeddings = [list(row[:]) for row in top_k_related_embeddings] # convert to list
         retrieved_doc = []
         total_length = 0
         for index in top_k_related_indices:
             retrieved_doc.append(self.data[index])
             total_length += len(self.data[index])
-            # if total_length > max_length:
-            #     break
         
 
         return retrieved_doc #top_k_related_embeddings, top_k_related_indices
 
-    def retrieve_documents(self, query, k=10):
-        #with open('retriever/icrc_embeddings.jsonl', 'r') as json_file:
-        
-        # documents_embeddings_array = np.array(documents_embeddings)
-        # reshaped_documents_embeddings = documents_embeddings_array.reshape(len(documents_embeddings), len(documents_embeddings[0][0]))
-        # with open('retriever/icrc_embeddings_reshaped.jsonl', 'w') as json_file:
-        #     json.dump(reshaped_documents_embeddings, json_file)
-            
+    def retrieve_documents(self, query, k=10):            
         query_embedding = self.vo.embed(query, model="voyage-large-2-instruct", input_type="query").embeddings
-
-        #reads all the documents in icrc_split.jsonl and stores them in data
-        #with open('retriever/icrc_split.jsonl', 'r') as json_file:
-        #    data = json.load(json_file)
-        
-        # data = []
-        # for root, dirs, files in os.walk('retriever/icrc_split_2.jsonl'):
-        #     for filename in files:
-        #         if filename.endswith('.json'):
-        #             file_path = os.path.join(root, filename)
-        #             with open(file_path, 'r') as json_file:
-        #                 data.append(json.load(json_file))
         
         max_length=1500
-        #top_docs = self.k_nearest_neighbors(query_embedding, k=k, max_length=max_length)
         retrieved_embed, distance = self.idx.knn_query(query_embedding, k=k)
 
-        print(distance)
         top_docs = [self.data[index] for index, distance in zip(retrieved_embed[0], distance[0]) if distance < 0.25]
         if len(top_docs) == 0:
             return [], query_embedding
@@ -84,8 +59,6 @@ class Vectorstore:
             total_length = 0
             retrieved_doc = []  
             for res in results:
-                # if res.relevance_score < 0.7:
-                #     break
                 #quick and dirty fix
                 if top_docs[res.index]["source_document"] == "**Tropical diseases ethiology, pathologies and treatment":
                     continue
@@ -106,7 +79,7 @@ if __name__ == "__main__":
         for line in json_file:
             data.append(json.loads(line)["text"])
     new_data = []
-    #new data is data,but with a maximum of 20000 characaters per document
+    #new data is data,but with a maximum of 8000 characaters per document
     for document in data:
         if len(document) > 8000:
             new_data.append(document[:8000])

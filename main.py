@@ -81,9 +81,7 @@ if selected_mode == 'ICRC-knowledge based chatbot':
             for line in json_file:
                 data.append(json.loads(line))
         shape = 1024
-        print("heeeere")
         st.session_state.vector_store = Vectorstore(document_embeddings=documents_embeddings, data=data, shape=shape)
-        print("there")
     run_rag_mode(st.session_state.vector_store)
 elif selected_mode == 'Conversation-patient':
     run_conversation_patient_mode()

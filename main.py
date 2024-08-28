@@ -99,8 +99,7 @@ with st.sidebar:
             save_conversation(st.session_state.rag_messages, selected_mode)
         elif selected_mode == 'Conversation-patient' and "conversation_messages" in st.session_state:
             save_conversation(st.session_state.conversation_messages, selected_mode, build_additional_information())
-        # elif selected_mode == 'Conversation-general' and "conversation_general_messages" in st.session_state:
-        #     save_conversation(st.session_state.conversation_general_messages, selected_mode)
+
     if st.sidebar.button("Clear Chat History"):
         if selected_mode == 'ICRC-knowledge based chatbot' and "rag_messages" in st.session_state:
             st.session_state.rag_messages = [{"role": "assistant", "content": "How may I assist you today?"}]

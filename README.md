@@ -27,7 +27,6 @@ If you want to use RAG Mode you need to setup a cohere and voyageai account (the
 ## Modifying base documents for RAG Mode
 
 If you want to embed new documents you can run the embedding.py script with the following command:
- 
     ```bash
     python3 retriever\embedding.py your_file.jsonl new_embeddings_file.jsonl
     ```

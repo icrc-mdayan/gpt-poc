@@ -27,7 +27,7 @@ If you want to use RAG Mode you need to setup a cohere and voyageai account (the
 ## Modifying base documents for RAG Mode
 
 If you want to embed new documents you can run the embedding.py script with the following command:
-    ```bash
+    ```
     python3 retriever\embedding.py your_file.jsonl new_embeddings_file.jsonl
     ```
 This will create a new embedding file.
@@ -35,7 +35,7 @@ You then need to change the files at line 77 and 80 in main.py to put your embed
 
 note:
 The format of the documents needs to be:
-    ```bash
+    ```
     {"source_document": , "page_number": , "paragraph_title": , "subtitle": , "text": }
     ```
 You should also put the source documents in the 'retriever\ressources' folder if you want the user to be able to check at the source document. 

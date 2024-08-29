@@ -20,6 +20,15 @@
 
 - If you want to access this online from a browser, click on the following link: [Streamlit App](https://healthpoc.streamlit.app/)
 
+## Overall description of RAG
+
+The RAG is fairly simple, we processed the books/guidelines paragraph by paragraph using [Surya](https://github.com/VikParuchuri/surya.git) (you might need a GPU for the surya processing). Then we used semantic chunking to chunk the documents into smaller documents. We use a simple VectorStore to make the search of large corpus of documents fast. The retrieval process is a simple cosine similarity of embeddings into reranking.
+
+Small illustration of how RAG is implemented in this repository:
+![Alt text](./images/scheme_rag.png)
+
+note:
+If you want to use semantic chunking you can use the chunk_text function from documents\data_splitting.py
 
 ## Setting up RAG Mode
 If you want to use RAG Mode you need to setup a cohere and voyageai account (they are free) and put your API keys in API_token.json
@@ -39,6 +48,3 @@ The format of the documents needs to be:
     {"source_document": , "page_number": , "paragraph_title": , "subtitle": , "text": }
     ```
 You should also put the source documents in the 'retriever\ressources' folder if you want the user to be able to check at the source document. 
-
-note 2:
-If you want to use semantic chunking you can use the chunk_text function from documents\data_splitting.py

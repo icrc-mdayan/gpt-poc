@@ -116,48 +116,48 @@ def run_conversation_patient_mode():
     # st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
     def llm_generate_response(prompt_input, total_text_conversation):
-        client = OpenAI(base_url="http://104.171.203.227:8000/v1", api_key="EMPTY")
+        # client = OpenAI(base_url="http://104.171.203.227:8000/v1", api_key="EMPTY")
 
-        temperature = 0.6
-        top_p = 0.9
-        max_tokens = 1024
-
-        # Add the user's input to the total conversation
-        total_text_conversation += f"User: {prompt_input[-1]['content']}\n"
-
-        response = client.chat.completions.create(
-            model="llama-3-70b-meditron", 
-            messages=prompt_input, 
-            temperature=temperature, 
-            top_p=top_p,
-            max_tokens=max_tokens
-        )
-
-        # Add the assistant's response to the total conversation
-        total_text_conversation += f"Assistant: {response.choices[0].message.content}\n"
-
-        return response.choices[0].message.content, total_text_conversation
-    
-        # llama = LlamaAPI("LA-488cd8bbb61342669fc4c6ce6feb11822f997ac0200f4c12b808766991306fcf")
+        # temperature = 0.6
+        # top_p = 0.9
+        # max_tokens = 1024
 
         # # Add the user's input to the total conversation
         # total_text_conversation += f"User: {prompt_input[-1]['content']}\n"
 
-        # api_request_json = {
-        #     "messages": prompt_input,
-        #     "stream": False,
-        #     "temperature": 0.6,
-        #     "max_tokens": 1024,
-        #     "top_p": 0.9
-        # }
-
-        # response = llama.run(api_request_json)
-        # assistant_message = response.json()["choices"][0]["message"]["content"]
+        # response = client.chat.completions.create(
+        #     model="llama-3-70b-meditron", 
+        #     messages=prompt_input, 
+        #     temperature=temperature, 
+        #     top_p=top_p,
+        #     max_tokens=max_tokens
+        # )
 
         # # Add the assistant's response to the total conversation
-        # total_text_conversation += f"Assistant: {assistant_message}\n"
+        # total_text_conversation += f"Assistant: {response.choices[0].message.content}\n"
 
-        # return assistant_message, total_text_conversation
+        # return response.choices[0].message.content, total_text_conversation
+    
+        llama = LlamaAPI("LA-488cd8bbb61342669fc4c6ce6feb11822f997ac0200f4c12b808766991306fcf")
+
+        # Add the user's input to the total conversation
+        total_text_conversation += f"User: {prompt_input[-1]['content']}\n"
+
+        api_request_json = {
+            "messages": prompt_input,
+            "stream": False,
+            "temperature": 0.6,
+            "max_tokens": 1024,
+            "top_p": 0.9
+        }
+
+        response = llama.run(api_request_json)
+        assistant_message = response.json()["choices"][0]["message"]["content"]
+
+        # Add the assistant's response to the total conversation
+        total_text_conversation += f"Assistant: {assistant_message}\n"
+
+        return assistant_message, total_text_conversation
 
     def generate_response(prompt_input):
         system_prompt_content = construct_prompt("patient")

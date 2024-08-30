@@ -1,4 +1,4 @@
-# streamlit_icrc
+# gpt-poc
 
 ## Introduction
 - This repo presents proofs of concept (POC) of two features that aim to be integrated into the MOOVE platform in the future.

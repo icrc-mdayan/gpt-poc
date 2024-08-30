@@ -28,11 +28,6 @@ def build_additional_information():
     processed_age, processed_sex, processed_location = process_user_entries(age, sex, location)
     additional_information += f"\n" + process_csv(filter_csv(processed_age, processed_sex, processed_location))
 
-    # if patient_dict['location'] is not None:
-    #     country_health_text = match_location_country(patient_dict['location'])
-    #     additional_information += f"\n\nHere is the health information for {patient_dict['location']}:\n"
-    #     additional_information += country_health_text
-    
     return additional_information
 
 def match_location_country(location):
@@ -69,12 +64,6 @@ def run_conversation_patient_mode():
     # Patient information inputs
     st.subheader('Patient Information :')
     col1, col2 = st.columns(2)
-
-    # set the patient information using st.session_state['key'] = default value
-    # st.session_state['location'] = ''
-    # st.session_state['age'] = None
-    # st.session_state['Sex'] = None
-    # st.session_state['travel_history'] = ''
     
     with col1:
         Sex = st.selectbox('Sex', ('Male', 'Female', 'Other'), key='Sex_widget')
@@ -106,58 +95,51 @@ def run_conversation_patient_mode():
         with st.chat_message(message["role"]):
             st.write(message["content"])
 
-    # def clear_chat_history():
-    #     st.session_state.conversation_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-    #     st.session_state['location'] = ''
-    #     st.session_state['age'] = None
-    #     st.session_state['Sex'] = 'Male'
-    #     st.session_state['travel_history'] = ''
-
-    # st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
-
     def llm_generate_response(prompt_input, total_text_conversation):
-        # client = OpenAI(base_url="http://104.171.203.227:8000/v1", api_key="EMPTY")
+        # MEDITRON-3 API MANAGEMENT ----------------------------
+        client = OpenAI(base_url="http://104.171.203.227:8000/v1", api_key="EMPTY")
 
-        # temperature = 0.6
-        # top_p = 0.9
-        # max_tokens = 1024
-
-        # # Add the user's input to the total conversation
-        # total_text_conversation += f"User: {prompt_input[-1]['content']}\n"
-
-        # response = client.chat.completions.create(
-        #     model="llama-3-70b-meditron", 
-        #     messages=prompt_input, 
-        #     temperature=temperature, 
-        #     top_p=top_p,
-        #     max_tokens=max_tokens
-        # )
-
-        # # Add the assistant's response to the total conversation
-        # total_text_conversation += f"Assistant: {response.choices[0].message.content}\n"
-
-        # return response.choices[0].message.content, total_text_conversation
-    
-        llama = LlamaAPI("LA-488cd8bbb61342669fc4c6ce6feb11822f997ac0200f4c12b808766991306fcf")
+        temperature = 0.6
+        top_p = 0.9
+        max_tokens = 1024
 
         # Add the user's input to the total conversation
         total_text_conversation += f"User: {prompt_input[-1]['content']}\n"
 
-        api_request_json = {
-            "messages": prompt_input,
-            "stream": False,
-            "temperature": 0.6,
-            "max_tokens": 1024,
-            "top_p": 0.9
-        }
-
-        response = llama.run(api_request_json)
-        assistant_message = response.json()["choices"][0]["message"]["content"]
+        response = client.chat.completions.create(
+            model="llama-3-70b-meditron", 
+            messages=prompt_input, 
+            temperature=temperature, 
+            top_p=top_p,
+            max_tokens=max_tokens
+        )
 
         # Add the assistant's response to the total conversation
-        total_text_conversation += f"Assistant: {assistant_message}\n"
+        total_text_conversation += f"Assistant: {response.choices[0].message.content}\n"
 
-        return assistant_message, total_text_conversation
+        return response.choices[0].message.content, total_text_conversation
+    
+        # LLAMA 3.1 API MANAGEMENT ----------------------------
+        # llama = LlamaAPI("LA-488cd8bbb61342669fc4c6ce6feb11822f997ac0200f4c12b808766991306fcf")
+
+        # # Add the user's input to the total conversation
+        # total_text_conversation += f"User: {prompt_input[-1]['content']}\n"
+
+        # api_request_json = {
+        #     "messages": prompt_input,
+        #     "stream": False,
+        #     "temperature": 0.6,
+        #     "max_tokens": 1024,
+        #     "top_p": 0.9
+        # }
+
+        # response = llama.run(api_request_json)
+        # assistant_message = response.json()["choices"][0]["message"]["content"]
+
+        # # Add the assistant's response to the total conversation
+        # total_text_conversation += f"Assistant: {assistant_message}\n"
+
+        # return assistant_message, total_text_conversation
 
     def generate_response(prompt_input):
         system_prompt_content = construct_prompt("patient")
@@ -167,15 +149,9 @@ def run_conversation_patient_mode():
 
         prompt = [{"role": "system", "content": system_prompt_content}] + st.session_state.conversation_messages[-2:] + [{"role": "user", "content": prompt_input}]
         
-        # print("PROMPT ::: ", prompt)
-
         # Add the system prompt to the total_text_conversation if it's not already there
         if not st.session_state.total_text_conversation.startswith("System: "):
             st.session_state.total_text_conversation = f"System: {system_prompt_content}\n" + st.session_state.total_text_conversation
-
-        # prompt_new = [{"role": "system", "content": "You are a child. Act and speak like a child. Ask questions like a child"}, {"role": "user", "content": prompt_input}]
-
-        print('PROMPT ::: ', prompt)
 
         output, st.session_state.total_text_conversation = llm_generate_response(prompt, total_text_conversation=st.session_state.total_text_conversation)
         return output

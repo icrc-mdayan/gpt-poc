@@ -4,6 +4,7 @@ from openai import OpenAI
 from scripts.utils import construct_prompt
 from fuzzywuzzy import process
 from llamaapi import LlamaAPI
+from country_cards_utils import *
 
 def build_additional_information():
     patient_dict = {
@@ -19,6 +20,13 @@ def build_additional_information():
         f"Location: {patient_dict['location']}\n"
         f"Recent travel places: {patient_dict['travel_history']}\n"
     )
+
+    location = st.session_state.get('location_widget')
+    sex = st.session_state.get('Sex_widget')
+    age = st.session_state.get('age_widget')
+
+    processed_age, processed_sex, processed_location = process_user_entries(age, sex, location)
+    additional_information += f"\n" + process_csv(filter_csv(processed_age, processed_sex, processed_location))
 
     # if patient_dict['location'] is not None:
     #     country_health_text = match_location_country(patient_dict['location'])
@@ -166,6 +174,8 @@ def run_conversation_patient_mode():
             st.session_state.total_text_conversation = f"System: {system_prompt_content}\n" + st.session_state.total_text_conversation
 
         # prompt_new = [{"role": "system", "content": "You are a child. Act and speak like a child. Ask questions like a child"}, {"role": "user", "content": prompt_input}]
+
+        print('PROMPT ::: ', prompt)
 
         output, st.session_state.total_text_conversation = llm_generate_response(prompt, total_text_conversation=st.session_state.total_text_conversation)
         return output

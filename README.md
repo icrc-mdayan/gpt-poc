@@ -40,14 +40,14 @@ If you want to embed new documents you can run the embedding.py script with the 
     python3 retriever\embedding.py your_file.jsonl new_embeddings_file.jsonl
     ```
 This will create a new embedding file.
-You then need to change the files at line 77 and 80 in main.py to put your embedding and documents files
+You then need to change the files at lines 77 and 80 in main.py to put your embedding and document files
 
 note:
 The format of the documents needs to be:
     ```
     {"source_document": , "page_number": , "paragraph_title": , "subtitle": , "text": }
     ```
-You should also put the source documents in the 'retriever\ressources' folder if you want the user to be able to check at the source document. 
+You should also put the source documents in the 'retriever\ressources' folder if you want the user to be able to check the source document. 
 
 
 ## Overall description of Conversation
@@ -63,19 +63,34 @@ You can find the prompts in the ```prompts/conversation``` folder.
 
 ### API calls
 For calling the model, you can find the corresponding *llm_generate_response* function in the ```conversation_patient_mode.py``` file.
-- The first way is using the Meditron-3 medical model, hosted on lambda-labs by EPFL. Disclaimer: Due to recent changes, this model struggles to fit the onversational constraints.
-- The second one requires an API key from **LlamaAPI** and use the Llama-3.1 model, which is not specifically tuned for medical purposes. For security reasons, you should create you own user login and your own API key.
+- The first way is using the Meditron-3 medical model, hosted on lambda-labs by EPFL. Disclaimer: Due to recent changes, this model struggles to fit the conversational constraints.
+- The second one requires an API key from **LlamaAPI** and uses the Llama-3.1 model, which is not specifically tuned for medical purposes. For security reasons, you should create you own user login and your own API key.
 
 ### Country Cards
 In order to add relevant context, tailored to each patient description, we add additional information based on user inputs :
 - Age of the patient
-- Sex of the patien
+- Sex of the patient
 - Location of the patient)
 
-This information is based uppon data from the Healthdata website. 
-To rebuilt and retrieve up to date located in ```scripts/cards```, run the ```scripts/HHME.ipynb``` jupyter notebook.
+This information is based on data from the Healthdata website. 
+To rebuild and retrieve up to date located in ```scripts/cards```, run the ```scripts/HHME.ipynb``` jupyter notebook.
+
+You need to have an API key at [https://api.healthdata.org/sdg/]([url](https://api.healthdata.org/sdg/)). For now, there is a personal one to make it functional, as it's not linked to any billing but you need to change it and put your own in the ```IHME.ipynb``` file.
 When calling the model, it will automatically filter the data and add relevant information based on user entries as additional context.
 
-Small illustration of how the integration of country cards information for the conversational feature:
+Small illustration of how the integration of country card information for the conversational feature:
+
+### Additional point
+
+A second way of conversation architecture was developed but /!\ not fully tested /!\ You can find the work under ```conversation_patient_v2.py```, leveraging another agent summarizing the exchanges between the user and the model to extend the length of the conversation. You can find the architecture here:
 ![Alt text](./images/country_cards_architecture.png)
+
+## General structure information
+
+- In the ```lib/``` folder you can find a skeleton base used in the multiagent architecture.
+- In the ```scripts/``` folder you find :
+    - ```cards/``` folder that contains data to build the country cards
+    - ```location_name_dict.json/``` file that is a list of countries and their associated id, that contains data for the country cards
+    - scrapers scripts, processing scripts used along the way
+
 

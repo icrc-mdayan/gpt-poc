@@ -48,3 +48,34 @@ The format of the documents needs to be:
     {"source_document": , "page_number": , "paragraph_title": , "subtitle": , "text": }
     ```
 You should also put the source documents in the 'retriever\ressources' folder if you want the user to be able to check at the source document. 
+
+
+## Overall description of Conversation
+
+The Conversation Chatbot interaction allows users to interact with the Large Language Model more humanly. It is tailored for diagnosis and treatment recommendation, given a patient description. The model will actively ask questions to gather precise information about the patient and suggest diagnostics to pay attention to.
+To that extent, the model is system-prompted and hyper-parameters are specifically tuned.
+
+Small illustration of how the architecture for the conversational feature:
+![Alt text](./images/conversation_architecture.png)
+
+### Prompts
+You can find the prompts in the ```prompts/conversation``` folder.
+
+### API calls
+For calling the model, you can find the corresponding *llm_generate_response* function in the ```conversation_patient_mode.py``` file.
+- The first way is using the Meditron-3 medical model, hosted on lambda-labs by EPFL. Disclaimer: Due to recent changes, this model struggles to fit the onversational constraints.
+- The second one requires an API key from **LlamaAPI** and use the Llama-3.1 model, which is not specifically tuned for medical purposes. For security reasons, you should create you own user login and your own API key.
+
+### Country Cards
+In order to add relevant context, tailored to each patient description, we add additional information based on user inputs :
+- Age of the patient
+- Sex of the patien
+- Location of the patient)
+
+This information is based uppon data from the Healthdata website. 
+To rebuilt and retrieve up to date located in ```scripts/cards```, run the ```scripts/HHME.ipynb``` jupyter notebook.
+When calling the model, it will automatically filter the data and add relevant information based on user entries as additional context.
+
+Small illustration of how the integration of country cards information for the conversational feature:
+![Alt text](./images/country_cards_architecture.png)
+

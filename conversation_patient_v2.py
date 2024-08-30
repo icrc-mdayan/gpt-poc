@@ -118,15 +118,15 @@ def run_conversation_patient_v2():
         prompt = [{"role": "system", "content": system_prompt_summarizer}, {"role": "user", "content": additional_information + chats}]
         updated_patient_description, _ = summarizer_agent.generate_response(prompt)
 
-        print("Finish summarizing the patient description!")
+        # print("Finish summarizing the patient description!")
 
-        print("------ PROMPT SUMMARIZER ------")
-        print(prompt)
-        print("-------------------------------")
+        # print("------ PROMPT SUMMARIZER ------")
+        # print(prompt)
+        # print("-------------------------------")
 
-        print("------ Updated Patient Description ------")
-        print(updated_patient_description)
-        print("-----------------------------------------")
+        # print("------ Updated Patient Description ------")
+        # print(updated_patient_description)
+        # print("-----------------------------------------")
 
         # updated_patient_description = "**Patient**\n" + updated_patient_description.split("Patient")[1].strip()
         return updated_patient_description

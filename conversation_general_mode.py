@@ -24,10 +24,6 @@ def run_conversation_general_mode():
         with st.chat_message(message["role"]):
             st.write(message["content"])
 
-    # def clear_chat_history():
-    #     st.session_state.conversation_general_messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-    # st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
-
     def llm_generate_response(prompt_input):
         client = OpenAI(base_url="http://104.171.203.227:8000/v1", api_key="EMPTY")
 

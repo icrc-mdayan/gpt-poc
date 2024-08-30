@@ -120,7 +120,7 @@ def run_conversation_patient_mode():
         return response.choices[0].message.content, total_text_conversation
     
         # LLAMA 3.1 API MANAGEMENT ----------------------------
-        # llama = LlamaAPI("LA-488cd8bbb61342669fc4c6ce6feb11822f997ac0200f4c12b808766991306fcf")
+        # llama = LlamaAPI("API-KEY")
 
         # # Add the user's input to the total conversation
         # total_text_conversation += f"User: {prompt_input[-1]['content']}\n"

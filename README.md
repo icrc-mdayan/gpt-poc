@@ -83,14 +83,14 @@ Small illustration of how the integration of country card information for the co
 ### Additional point
 
 A second way of conversation architecture was developed but /!\ not fully tested /!\ You can find the work under ```conversation_patient_v2.py```, leveraging another agent summarizing the exchanges between the user and the model to extend the length of the conversation. You can find the architecture here:
-![Alt text](./images/country_cards_architecture.png)
+![Alt text](./images/conversation_architecture_v2.png)
 
 ## General structure information
 
 - In the ```lib/``` folder you can find a skeleton base used in the multiagent architecture.
 - In the ```scripts/``` folder you find :
     - ```cards/``` folder that contains data to build the country cards
-    - ```location_name_dict.json/``` file that is a list of countries and their associated id, that contains data for the country cards
+    - ```location_name_dict.json``` file that is a list of countries and their associated id, that contains data for the country cards
     - scrapers scripts, processing scripts used along the way
 
 
